@@ -15,3 +15,23 @@ router.get('/', async (req, res, next) => {
     next(err)
   }
 })
+
+router.get('/:userId', async (req, res, next) => {
+  try {
+    const userInfo = await User.findOne({id: userId, include: Cart})
+    //
+    res.json(userInfo)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.put('/:userId', async (req, res, next) => {
+  try {
+    const oldU = await User.findByPk(userId)
+    const newU = await oldU.update(req.body)
+    res.json(newU)
+  } catch (error) {
+    next(error)
+  }
+})

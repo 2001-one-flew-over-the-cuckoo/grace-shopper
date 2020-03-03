@@ -6,7 +6,16 @@ const User = db.define('user', {
   email: {
     type: Sequelize.STRING,
     unique: true,
-    allowNull: false
+    allowNull: false,
+    validate: {
+      isEmail: true
+    }
+  },
+  name: {
+    type: Sequelize.STRING
+  },
+  address: {
+    type: Sequelize.TEXT
   },
   password: {
     type: Sequelize.STRING,
@@ -24,8 +33,18 @@ const User = db.define('user', {
       return () => this.getDataValue('salt')
     }
   },
+  phone: {
+    type: Sequelize.INTEGER,
+    validate: {
+      len: [10]
+    }
+  },
   googleId: {
     type: Sequelize.STRING
+  },
+  isAdmin: {
+    type: Sequelize.BOOLEAN,
+    default: false
   }
 })
 
