@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
 
-module.exports = db.define('product', {
+const Product = db.define('product', {
   name: {
     type: Sequelize.STRING,
     unique: true,
@@ -29,3 +29,5 @@ module.exports = db.define('product', {
       'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60'
   }
 })
+
+module.exports = Product

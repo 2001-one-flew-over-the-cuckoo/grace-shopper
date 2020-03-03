@@ -11,6 +11,7 @@ async function seed() {
     User.create({email: 'cody@email.com', password: '123'}),
     User.create({email: 'murphy@email.com', password: '123'})
   ])
+  console.log('Product', Product)
   const products = await Promise.all([
     Product.create({
       name: 'Get Well Box',
