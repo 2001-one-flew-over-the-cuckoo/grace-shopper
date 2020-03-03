@@ -1,7 +1,7 @@
 Care Kit Schema
 
 /////// MVP
-Checked by Caitlin
+Checked by Caitlin, Hilary
 
 Models:
 - [] User
