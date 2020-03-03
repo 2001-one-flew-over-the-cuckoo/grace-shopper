@@ -2,15 +2,15 @@ import React from 'react'
 import {Navbar} from './components'
 import Routes from './routes'
 import SingleProduct from './components/SingleProduct'
-import Products from './components/products'
+import AllProducts from './components/AllProducts'
 import {BrowserRouter as Router, Route} from 'react-router-dom'
 
 const App = () => {
   return (
     <div>
       <Navbar />
-      <Route path="/products" component={Products} />
-      <Route path="/products/:productId" component={SingleProduct} />
+      <Route exact path="/products" component={AllProducts} />
+      <Route exact path="/products/:productId" component={SingleProduct} />
       <Routes />
     </div>
   )
