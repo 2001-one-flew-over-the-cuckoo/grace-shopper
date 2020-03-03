@@ -1,7 +1,7 @@
 {
-  "name": "carekit",
+  "name": "boilermaker",
   "version": "2.0.0",
-  "description": "CareKit - Grace Shopper",
+  "description": "Some boilerplate code to get you started - get shakin'!",
   "engines": {
     "node": ">= 7.0.0"
   },

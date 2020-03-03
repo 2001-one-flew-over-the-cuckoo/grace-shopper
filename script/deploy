@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 # Hello, welcome to a bash script.
+
 # This bash script deploys your boilermaker application.
 
 # On the terminal you run individual
@@ -22,7 +23,7 @@ set -e
 function cleanup_at_exit {
   # return to your master branch
   git checkout master
-
+  
   # remove the deploy branch
   git branch -D deploy
 }
