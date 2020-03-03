@@ -1,6 +1,7 @@
 Care Kit Schema
 
 /////// MVP
+Checked by Caitlin
 
 Models:
 - [] User
