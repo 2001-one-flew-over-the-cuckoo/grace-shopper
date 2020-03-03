@@ -5,10 +5,11 @@ Checked by Caitlin, Hilary
 
 Models:
 - [] User
+  - [] email (STRING, unique, not empty, not null)
   - [] name (STRING)
   - [] address (TEXT)
-  - [] email (STRING, unique, not empty, not null)
   - [] password (needs salt)
+  - [] salt (for password)
   - [] phone_num (INTEGER)
   - [] is_admin (BOOLEAN)
 
@@ -17,16 +18,15 @@ Models:
   - [] price (DECIMAL)
   - [] description (TEXT)
   - [] image (STRING)
-  - [] num_in_stock (INTEGER, min = 0, max = 100)
 
 - [] Cart (through table)
   - [] user_id (INTEGER)
   - [] product_id (INTEGER)
-  - [] quantity (INTEGER), max = Product.num_in_stock)
+  - [] quantity (INTEGER)
 
-Associations: (needs work)
-User.belongsToMany(Product, through: 'cart')
-Product.belongsToMany(User, through: 'Product')
+Associations: (needs work - but confident of belongsToMany associations)
+User.belongsToMany(Product, through: 'Cart')
+Product.belongsToMany(User, through: 'Cart')
 User.belongsToMany(Product, through: 'Order')
 Product.belongsToMany(User, through: 'Order')
 Product.belongsToMany(Order, through: 'Order_Product')
@@ -37,6 +37,7 @@ Order.belongsToMany(Product, through: 'Order_Product')
 - [] Category
 - [] OAUTH
 - [] payments (Stripe, PayPal)
+- [] Product: num_in_stock, Cart: quantity = max(Product.num_in_stock)
 
 /////// ROUND 3
 - [] Order History
