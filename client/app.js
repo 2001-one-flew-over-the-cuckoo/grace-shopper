@@ -9,9 +9,9 @@ const App = () => {
   return (
     <div>
       <Navbar />
+      <Routes />
       <Route exact path="/products" component={AllProducts} />
       <Route exact path="/products/:productId" component={SingleProduct} />
-      <Routes />
     </div>
   )
 }
