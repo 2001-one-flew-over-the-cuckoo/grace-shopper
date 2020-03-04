@@ -6,8 +6,6 @@ export const Cart = props => {
   // Not surrently being imported to User-Home yet.
   // Should we include cart when we use User.findOne() in Sequelize??
   const {products} = props
-  console.log('props', props)
-  console.log('props.products', props.products)
 
   return (
     <div>

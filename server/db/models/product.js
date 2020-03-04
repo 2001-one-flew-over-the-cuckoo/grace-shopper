@@ -30,9 +30,4 @@ const Product = db.define('product', {
   }
 })
 
-Product.afterValidate(product => {
-  console.log('product: ', product)
-  // console.log('error: ', error)
-})
-
 module.exports = Product

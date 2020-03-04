@@ -21,7 +21,7 @@ export class SingleProduct extends Component {
   }
   render() {
     const {product} = this.props
-    console.log('this.props', this.props)
+
     return (
       <div className="product">
         <img src={product.image} />
@@ -40,7 +40,6 @@ export class SingleProduct extends Component {
 }
 
 const mapState = state => {
-  console.log('state', state)
   return {
     product: state.singleProduct
   }
