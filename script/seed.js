@@ -22,35 +22,35 @@ async function seed() {
   const products = await Promise.all([
     Product.create({
       name: 'Get Well Box',
-      price: 30.0,
+      price: 3000,
       description:
         'Our Get Well box is filled with all the love and goodies to help your friend recover.'
     }),
     Product.create({
       name: 'Happy Birthday Box',
-      price: 30.0,
+      price: 3000,
       description: 'Great for a long-distance BFF for their birthday.'
     }),
     Product.create({
       name: 'Breakup Box',
-      price: 30.0,
+      price: 3000,
       description:
         'Breakups are the worst. Be a good friend and get her a Breakup Box filled with everything she needs to feel better. '
     }),
     Product.create({
       name: 'Get Well Box 2',
-      price: 30.0,
+      price: 3000,
       description:
         'Our Get Well box is filled with all the love and goodies to help your friend recover.'
     }),
     Product.create({
       name: 'Happy Birthday Box 2',
-      price: 30.0,
+      price: 3000,
       description: 'Great for a long-distance BFF for their birthday.'
     }),
     Product.create({
       name: 'Breakup Box 2',
-      price: 30.0,
+      price: 3000,
       description:
         'Breakups are the worst. Be a good friend and get her a Breakup Box filled with everything she needs to feel better. '
     })
