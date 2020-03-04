@@ -13,14 +13,14 @@ class AllProducts extends Component {
   render() {
     const {products} = this.props
     return (
-      <div>
-        <div>
+      <div className="all-prod-container">
+        <div className="all-products">
           {products.map(product => {
             return (
-              <div key={product.id}>
+              <div key={product.id} className="one-product">
                 <Link to={`/products/${product.id}`}>
                   <img src={product.image} />
-                  <div>{product.name}</div>
+                  <h4>{product.name}</h4>
                 </Link>
               </div>
             )

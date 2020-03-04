@@ -19,3 +19,24 @@ form div {
   margin: 1em;
   display: inline-block;
 }
+
+/* .all-prod-container {
+  display: flex;
+} */
+
+.all-products {
+  justify-content: center;
+  display: inline-flex;
+  flex-wrap: wrap;
+  padding: 0 3em;
+
+  a:visited {
+    text-decoration: none;
+    color: black;
+  }
+}
+
+.one-product {
+  margin-top: 5em;
+  margin-left: 3em;
+}
