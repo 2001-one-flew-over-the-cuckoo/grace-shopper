@@ -56,6 +56,8 @@ async function seed() {
     })
   ])
 
+  await users[0].setProducts(products)
+
   console.log(`seeded ${users.length} users`)
   console.log(`seeded ${products.length} users`)
   console.log(`seeded successfully`)
