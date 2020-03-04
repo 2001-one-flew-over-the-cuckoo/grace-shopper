@@ -18,7 +18,8 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:userId', async (req, res, next) => {
   try {
-    const userInfo = await User.findOne({id: userId, include: Cart})
+    // const userInfo = await User.findOne({id: req.params.id, include: Cart})
+    const userInfo = await User.findOne({id: req.params.id})
     //
     res.json(userInfo)
   } catch (error) {

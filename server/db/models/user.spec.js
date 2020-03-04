@@ -29,4 +29,22 @@ describe('User model', () => {
       })
     }) // end describe('correctPassword')
   }) // end describe('instanceMethods')
+
+  describe('user attributes definition', () => {
+    let cody
+    beforeEach(() => {
+      cody = User.build({
+        email: 'cody@gmail.com',
+        password: '123cody'
+      })
+    })
+
+    it('includes `email` and `password` fields', async () => {
+      await cody.save()
+      cody = await User.findOne({where: {email: 'cody@gmail.com'}})
+
+      expect(cody.email).to.equal('cody@gmail.com')
+      // expect(cody.password).to.exist; // eslint-disable-line no-unused-expressions
+    })
+  })
 }) // end describe('User model')
