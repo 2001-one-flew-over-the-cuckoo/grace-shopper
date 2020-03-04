@@ -23,11 +23,8 @@ router.get('/:userId', async (req, res, next) => {
       id: req.params.userId,
       include: [
         {
-          model: Product,
-          attributes: ['name', 'price', 'image'],
-          through: {
-            attributes: ['quantity']
-          }
+          model: Order,
+          include: [{model: Product_Order}]
         }
       ]
     })

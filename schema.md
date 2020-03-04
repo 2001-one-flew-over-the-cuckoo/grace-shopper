@@ -24,17 +24,17 @@ Models:
 
 * [] Product_Order
 
-  * [] order_id (INTEGER)
-  * [] product_id (INTEGER)
-  * [] price (INTEGER)
+  * [] orderId (INTEGER)
+  * [] productId (INTEGER)
+  * [] orderPrice (INTEGER)
   * [] quantity (INTEGER)
 
 * [] Order
+  * [] user_id (INTEGER)
   * [] date_ordered (DATE)
   * [] completed (BOOLEAN)
   * [] shipped (BOOLEAN)
-  * [] confirmation_num (INTEGER)
-  * [] user_id (INTEGER)
+  * [] confirmation_num (STRING)
   * [] shipping_address (TEXT)
 
 Associations:
@@ -48,7 +48,7 @@ Order.belongsToMany(Product, through: Product_Order)
 * [] Category
 * [] OAUTH
 * [] payments (Stripe, PayPal)
-* [] Product: num_in_stock, Cart: quantity = max(Product.num_in_stock)
+* [] Product: num_in_stock
 
 <img
   src="https://drive.google.com/file/d/1J-dOnU9l1kukAp4G6QJMglQU6uH_ZI0Z/view"

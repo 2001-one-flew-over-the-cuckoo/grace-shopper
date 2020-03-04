@@ -8,10 +8,9 @@ router.post('/login', async (req, res, next) => {
       email: req.body.email,
       include: [
         {
-          model: Product,
-          attributes: ['name', 'price', 'image'],
-          through: {
-            attributes: ['quantity']
+          model: Order,
+          where: {
+            completed: false
           }
         }
       ]
