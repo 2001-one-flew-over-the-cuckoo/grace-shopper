@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {AdminHome} from './admin-home'
+import Cart from './cart.js'
 
 /**
  * COMPONENT
@@ -13,6 +14,7 @@ export const UserHome = props => {
     <div>
       <h3>Welcome, {email}</h3>
       <div>{isAdmin === true ? <AdminHome /> : <span>NO!</span>}</div>
+      <Cart />
     </div>
   )
 }
