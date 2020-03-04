@@ -31,7 +31,6 @@ router.get('/:userId', async (req, res, next) => {
         }
       ]
     })
-    console.log('userInfo', userInfo)
     res.json(userInfo)
   } catch (error) {
     next(error)
