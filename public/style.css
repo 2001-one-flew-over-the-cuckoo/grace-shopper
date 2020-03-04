@@ -36,7 +36,11 @@ form div {
   }
 }
 
-.one-product {
+.all-products.one-product {
   margin-top: 5em;
   margin-left: 3em;
+}
+
+.product {
+  display: flex;
 }
