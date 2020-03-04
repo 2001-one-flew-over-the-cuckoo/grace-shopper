@@ -103,7 +103,6 @@ describe.only('User model', () => {
 
       it('generates a salt', async () => {
         const newSalt = await User.generateSalt()
-        // expect(newSalt).to.exist
         expect(newSalt).to.have.lengthOf.at.least(1)
       })
     })
