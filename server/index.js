@@ -10,6 +10,7 @@ const sessionStore = new SequelizeStore({db})
 const PORT = process.env.PORT || 3000
 const app = express()
 const socketio = require('socket.io')
+
 module.exports = app
 
 // This is a global Mocha hook, used for resource cleanup.
