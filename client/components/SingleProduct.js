@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchOneProduct} from '../store/singleProduct'
 import Select from 'react-select'
+import {Link} from 'react-router-dom'
 
 const options = [
   {value: 1, label: 1},
@@ -12,9 +13,6 @@ const options = [
 ]
 
 export class SingleProduct extends Component {
-  constructor() {
-    super()
-  }
   componentDidMount() {
     const productId = this.props.match.params.productId
     this.props.fetchOneProduct(productId)
@@ -33,6 +31,13 @@ export class SingleProduct extends Component {
             Quantity: <Select options={options} />
           </h3>
           <button>Add to Cart</button>
+        </div>
+        <div>
+          {isAdmin === true ? (
+            <Link to="/edit">Edit Product</Link>
+          ) : (
+            <h1>no</h1>
+          )}
         </div>
       </div>
     )

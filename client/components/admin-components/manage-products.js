@@ -1,8 +1,7 @@
-import React from 'react'
-import {Component} from 'react'
+import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import ProductForm from './manage-products-form.js'
-import {fetchOneProduct} from '../../store'
+import {fetchOneProduct} from '../../store/singleProduct'
 
 class ManageProducts extends Component {
   constructor() {
@@ -19,12 +18,15 @@ class ManageProducts extends Component {
   }
 
   componentDidMount() {
-    this.setState({
-      name: this.props.product.name,
-      price: this.props.product.price,
-      description: this.props.products.description,
-      image: this.props.product.image
-    })
+    console.log('props', this.props)
+    // this.setState({
+    //   name: this.props.product.name,
+    //   price: this.props.product.price,
+    //   description: this.props.product.description,
+    //   image: this.props.product.image
+    // })
+    const productId = this.props.match.params.productId
+    this.props.getProduct(productId)
   }
 
   handleSubmit(event) {
@@ -56,13 +58,13 @@ class ManageProducts extends Component {
 }
 
 const mapState = state => ({
-  products: state.products
+  product: state.product
 })
 
-const mapDispatch = dispatch => ({
-  getProduct: product => {
-    dispatch(fetchOneProduct(product.id))
+const mapDispatch = dispatch => {
+  return {
+    getProduct: productId => dispatch(fetchOneProduct(productId))
   }
-})
+}
 
 export default connect(mapState, mapDispatch)(ManageProducts)
