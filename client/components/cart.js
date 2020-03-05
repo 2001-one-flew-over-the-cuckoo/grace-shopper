@@ -3,21 +3,14 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {me} from '../store/user'
 
-class Cart extends Component {
-  componentDidMount() {
-    this.props.fetchMe()
-  }
-  render() {
-    // Not surrently being imported to User-Home yet.
-    // Should we include cart when we use User.findOne() in Sequelize??
-    // const {products} = props
-    console.log('props', this.props)
-    const cart = this.props.user.orders.filter(order => !order.completed)
-    console.log('cart', cart)
+const Cart = props => {
+  const ordersArr = props.user.orders
+  if (ordersArr.length > 0 && ordersArr[0].products.length > 0) {
+    let cart = props.user.orders[0].products
     return (
       <div>
-        {this.props.user.email}
-        {cart[0].products.map(prodInCart => {
+        {props.user.email}
+        {cart.map(prodInCart => {
           return (
             <div key={prodInCart.id} id="prodInCart">
               <img src={prodInCart.image} />
@@ -32,7 +25,7 @@ class Cart extends Component {
           <div>Subtotal</div>
           <div>
             {(
-              cart[0].products.reduce((acc, currVal) => {
+              cart.reduce((acc, currVal) => {
                 return acc + currVal.price
               }, 0) / 100
             ).toFixed(2)}
@@ -41,6 +34,8 @@ class Cart extends Component {
         <button>Checkout</button>
       </div>
     )
+  } else {
+    return <div>You have no items in your cart.</div>
   }
 }
 
