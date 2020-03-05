@@ -1,21 +1,30 @@
 const router = require('express').Router()
-const {User, Product} = require('../db/models')
+const {User, Order, Product} = require('../db/models')
 module.exports = router
 
 router.post('/login', async (req, res, next) => {
   try {
     const user = await User.findOne({
-      email: req.body.email,
+      where: {
+        email: req.body.email
+      },
       include: [
         {
-          model: Product,
-          attributes: ['name', 'price', 'image'],
-          through: {
-            attributes: ['quantity']
-          }
+          model: Order,
+          where: {
+            completed: false
+          },
+          required: false,
+          include: [
+            {
+              model: Product
+            }
+          ]
         }
       ]
     })
+
+    // console.log('USER HERE', user.orders[0].products)
     if (!user) {
       console.log('No such user found:', req.body.email)
       res.status(401).send('Wrong username and/or password')
@@ -52,8 +61,21 @@ router.post('/logout', (req, res) => {
   res.redirect('/')
 })
 
-router.get('/me', (req, res) => {
-  res.json(req.user)
+router.get('/me', async (req, res) => {
+  const user = await User.findOne({
+    where: {
+      id: req.user.id
+    },
+    include: [
+      {
+        model: Order,
+        include: {
+          model: Product
+        }
+      }
+    ]
+  })
+  res.json(user)
 })
 
 router.use('/google', require('./google'))

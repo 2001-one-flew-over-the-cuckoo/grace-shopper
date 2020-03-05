@@ -1,11 +1,9 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
 
-const Cart = db.define('cart', {
-  userId: {
-    type: Sequelize.INTEGER
-  },
-  productId: {
+const Product_Order = db.define('product_order', {
+  // the through table automatically generates the foreign keys for product and order, so we do not need to define here
+  orderPrice: {
     type: Sequelize.INTEGER
   },
   quantity: {
@@ -18,4 +16,4 @@ const Cart = db.define('cart', {
   }
 })
 
-module.exports = Cart
+module.exports = Product_Order

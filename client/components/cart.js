@@ -1,47 +1,57 @@
-import React from 'react'
+import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
+import {me} from '../store/user'
 
-export const Cart = props => {
-  // Not surrently being imported to User-Home yet.
-  // Should we include cart when we use User.findOne() in Sequelize??
-  const {products} = props
-  console.log('props', props)
-  console.log('props.products', props.products)
-
-  return (
-    <div>
-      <table>
-        <tr>
-          <th colSpan="2">Product</th>
-          <th>Price</th>
-          <th>Quantity</th>
-        </tr>
-
-        {products.map(p => {
+const Cart = props => {
+  const ordersArr = props.user.orders
+  if (ordersArr.length > 0 && ordersArr[0].products.length > 0) {
+    let cart = props.user.orders[0].products
+    return (
+      <div>
+        {props.user.email}
+        {cart.map(prodInCart => {
           return (
-            <tr key={p.id}>
-              <td>{p.name}</td>
-              <td>
-                <img src={p.image} />
-              </td>
-              <td>{p.price}</td>
-              <td>{p.cart.quantity}</td>
-            </tr>
+            <div key={prodInCart.id} id="prodInCart">
+              <img src={prodInCart.image} />
+              <div>{prodInCart.name}</div>
+              <div>Quantity (drop-down to be added)</div>
+              <div>{(prodInCart.price / 100).toFixed(2)}</div>
+              <div>[x]</div>
+            </div>
           )
         })}
-      </table>
-    </div>
-  )
+        <div id="subtotal">
+          <div>Subtotal</div>
+          <div>
+            {(
+              cart.reduce((acc, currVal) => {
+                return acc + currVal.price
+              }, 0) / 100
+            ).toFixed(2)}
+          </div>
+        </div>
+        <button>Checkout</button>
+      </div>
+    )
+  } else {
+    return <div>You have no items in your cart.</div>
+  }
 }
 
 const mapState = state => {
   return {
-    products: state.user.products
+    user: state.user
   }
 }
-export default connect(mapState)(Cart)
+const mapDispatch = dispatch => {
+  return {
+    fetchMe: () => dispatch(me())
+  }
+}
+
+export default connect(mapState, mapDispatch)(Cart)
 
 Cart.propType = {
-  products: PropTypes.array
+  user: PropTypes.object
 }
