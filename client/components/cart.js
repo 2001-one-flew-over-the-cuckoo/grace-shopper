@@ -28,7 +28,7 @@ class Cart extends Component {
             </div>
           )
         })}
-        <div id="subtotle">
+        <div id="subtotal">
           <div>Subtotal</div>
           <div>
             {(
