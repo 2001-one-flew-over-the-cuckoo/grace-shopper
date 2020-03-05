@@ -44,3 +44,12 @@ form div {
 .product {
   display: flex;
 }
+
+/* this is the cart style in user */
+#prodInCart {
+  display: flex;
+}
+
+#prodInCart img {
+  max-width: 250px;
+}

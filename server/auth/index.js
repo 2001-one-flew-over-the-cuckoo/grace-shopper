@@ -7,18 +7,19 @@ router.post('/login', async (req, res, next) => {
     const user = await User.findOne({
       where: {
         email: req.body.email
-      },
-      include: [
-        {
-          model: Order,
-          where: {
-            completed: false
-          },
-          include: {
-            model: Product
-          }
-        }
-      ]
+      }
+      // ,
+      // include: [
+      //   {
+      //     model: Order,
+      //     where: {
+      //       completed: false
+      //     },
+      //     include: {
+      //       model: Product
+      //     }
+      //   }
+      // ]
     })
     // console.log('USER HERE', user.orders[0].products)
     if (!user) {
@@ -57,8 +58,21 @@ router.post('/logout', (req, res) => {
   res.redirect('/')
 })
 
-router.get('/me', (req, res) => {
-  res.json(req.user)
+router.get('/me', async (req, res) => {
+  const user = await User.findOne({
+    where: {
+      id: req.user.id
+    },
+    include: [
+      {
+        model: Order,
+        include: {
+          model: Product
+        }
+      }
+    ]
+  })
+  res.json(user)
 })
 
 router.use('/google', require('./google'))

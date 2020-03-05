@@ -1,45 +1,62 @@
-import React from 'react'
+import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
+import {me} from '../store/user'
 
-export const Cart = props => {
-  // Not surrently being imported to User-Home yet.
-  // Should we include cart when we use User.findOne() in Sequelize??
-  // const {products} = props
-  // console.log('props', props)
-  return (
-    <div>
-      <table>
-        <tr>
-          <th colSpan="2">Product</th>
-          <th>Price</th>
-          <th>Quantity</th>
-        </tr>
-
-        {/* {products.map(p => {
+class Cart extends Component {
+  componentDidMount() {
+    this.props.fetchMe()
+  }
+  render() {
+    // Not surrently being imported to User-Home yet.
+    // Should we include cart when we use User.findOne() in Sequelize??
+    // const {products} = props
+    console.log('props', this.props)
+    const cart = this.props.user.orders.filter(order => !order.completed)
+    console.log('cart', cart)
+    return (
+      <div>
+        {this.props.user.email}
+        {cart[0].products.map(prodInCart => {
           return (
-            <tr key={p.id}>
-              <td>{p.name}</td>
-              <td>
-                <img src={p.image} />
-              </td>
-              <td>{p.price}</td>
-              <td>{p.cart.quantity}</td>
-            </tr>
+            <div key={prodInCart.id} id="prodInCart">
+              <img src={prodInCart.image} />
+              <div>{prodInCart.name}</div>
+              <div>Quantity (drop-down to be added)</div>
+              <div>{(prodInCart.price / 100).toFixed(2)}</div>
+              <div>[x]</div>
+            </div>
           )
-        })} */}
-      </table>
-    </div>
-  )
+        })}
+        <div id="subtotle">
+          <div>Subtotal</div>
+          <div>
+            {(
+              cart[0].products.reduce((acc, currVal) => {
+                return acc + currVal.price
+              }, 0) / 100
+            ).toFixed(2)}
+          </div>
+        </div>
+        <button>Checkout</button>
+      </div>
+    )
+  }
 }
 
 const mapState = state => {
   return {
-    products: state.user.products
+    user: state.user
   }
 }
-export default connect(mapState)(Cart)
+const mapDispatch = dispatch => {
+  return {
+    fetchMe: () => dispatch(me())
+  }
+}
+
+export default connect(mapState, mapDispatch)(Cart)
 
 Cart.propType = {
-  products: PropTypes.array
+  user: PropTypes.object
 }
