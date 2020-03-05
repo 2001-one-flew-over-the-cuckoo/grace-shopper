@@ -18,8 +18,6 @@ describe('Product model', () => {
           price: 10,
           description: 'description of birthday box'
         })
-
-        console.log('fakeFake in describe', fakeFake)
       })
 
       it('checks validations of the model and throws an error if requirements are not met', () => {

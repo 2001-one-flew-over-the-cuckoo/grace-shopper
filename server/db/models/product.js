@@ -11,7 +11,7 @@ const Product = db.define('product', {
     }
   },
   price: {
-    type: Sequelize.DECIMAL(5, 2),
+    type: Sequelize.INTEGER,
     validate: {
       min: 0
     }
@@ -28,11 +28,6 @@ const Product = db.define('product', {
     defaultValue:
       'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60'
   }
-})
-
-Product.afterValidate(product => {
-  console.log('product: ', product)
-  // console.log('error: ', error)
 })
 
 module.exports = Product

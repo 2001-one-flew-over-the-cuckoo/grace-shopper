@@ -21,13 +21,13 @@ export class SingleProduct extends Component {
   }
   render() {
     const {product} = this.props
-    console.log('this.props', this.props)
+
     return (
       <div className="product">
         <img src={product.image} />
         <div>
           <h2>{product.name}</h2>
-          <h3>{product.price}</h3>
+          <h3>${(product.price / 100).toFixed(2)}</h3>
           <h3>{product.description}</h3>
           <h3>
             Quantity: <Select options={options} />
@@ -40,7 +40,6 @@ export class SingleProduct extends Component {
 }
 
 const mapState = state => {
-  console.log('state', state)
   return {
     product: state.singleProduct
   }
