@@ -4,6 +4,19 @@ import {connect} from 'react-redux'
 import {me} from '../store/user'
 
 class Cart extends Component {
+  constructor() {
+    super()
+    this.state = {
+      user: {
+        orders: [
+          {
+            products: []
+          }
+        ]
+      }
+    }
+  }
+
   componentDidMount() {
     this.props.fetchMe()
   }
@@ -12,35 +25,40 @@ class Cart extends Component {
     // Should we include cart when we use User.findOne() in Sequelize??
     // const {products} = props
     console.log('props', this.props)
-    const cart = this.props.user.orders.filter(order => !order.completed)
-    console.log('cart', cart)
-    return (
-      <div>
-        {this.props.user.email}
-        {cart[0].products.map(prodInCart => {
-          return (
-            <div key={prodInCart.id} id="prodInCart">
-              <img src={prodInCart.image} />
-              <div>{prodInCart.name}</div>
-              <div>Quantity (drop-down to be added)</div>
-              <div>{(prodInCart.price / 100).toFixed(2)}</div>
-              <div>[x]</div>
+    let cart = []
+
+    if (this.props.user.orders.length > 0) {
+      cart = this.props.user.orders[0].products
+      return (
+        <div>
+          {this.props.user.email}
+          {cart[0].products.map(prodInCart => {
+            return (
+              <div key={prodInCart.id} id="prodInCart">
+                <img src={prodInCart.image} />
+                <div>{prodInCart.name}</div>
+                <div>Quantity (drop-down to be added)</div>
+                <div>{(prodInCart.price / 100).toFixed(2)}</div>
+                <div>[x]</div>
+              </div>
+            )
+          })}
+          <div id="subtotal">
+            <div>Subtotal</div>
+            <div>
+              {(
+                cart[0].products.reduce((acc, currVal) => {
+                  return acc + currVal.price
+                }, 0) / 100
+              ).toFixed(2)}
             </div>
-          )
-        })}
-        <div id="subtotal">
-          <div>Subtotal</div>
-          <div>
-            {(
-              cart[0].products.reduce((acc, currVal) => {
-                return acc + currVal.price
-              }, 0) / 100
-            ).toFixed(2)}
           </div>
+          <button>Checkout</button>
         </div>
-        <button>Checkout</button>
-      </div>
-    )
+      )
+    } else {
+      return <div>You have no items in your cart.</div>
+    }
   }
 }
 
