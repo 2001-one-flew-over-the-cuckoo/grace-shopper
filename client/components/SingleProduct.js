@@ -18,8 +18,9 @@ export class SingleProduct extends Component {
     this.props.fetchOneProduct(productId)
   }
   render() {
-    const {product} = this.props
-
+    const {product, user} = this.props
+    const isAdmin = user.isAdmin
+    console.log('user', user)
     return (
       <div className="product">
         <img src={product.image} />
@@ -34,7 +35,7 @@ export class SingleProduct extends Component {
         </div>
         <div>
           {isAdmin === true ? (
-            <Link to="/edit">Edit Product</Link>
+            <Link to={`/products/${product.id}/edit`}>Edit Product</Link>
           ) : (
             <h1>no</h1>
           )}
@@ -46,7 +47,8 @@ export class SingleProduct extends Component {
 
 const mapState = state => {
   return {
-    product: state.singleProduct
+    product: state.singleProduct,
+    user: state.user
   }
 }
 
