@@ -5,8 +5,8 @@ import {connect} from 'react-redux'
 export const Cart = props => {
   // Not surrently being imported to User-Home yet.
   // Should we include cart when we use User.findOne() in Sequelize??
-  const {products} = props
-
+  // const {products} = props
+  // console.log('props', props)
   return (
     <div>
       <table>
@@ -16,7 +16,7 @@ export const Cart = props => {
           <th>Quantity</th>
         </tr>
 
-        {products.map(p => {
+        {/* {products.map(p => {
           return (
             <tr key={p.id}>
               <td>{p.name}</td>
@@ -27,7 +27,7 @@ export const Cart = props => {
               <td>{p.cart.quantity}</td>
             </tr>
           )
-        })}
+        })} */}
       </table>
     </div>
   )

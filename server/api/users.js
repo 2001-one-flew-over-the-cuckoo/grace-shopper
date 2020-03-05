@@ -20,7 +20,9 @@ router.get('/', async (req, res, next) => {
 router.get('/:userId', async (req, res, next) => {
   try {
     const userInfo = await User.findOne({
-      id: req.params.userId,
+      where: {
+        id: req.params.userId
+      },
       include: {
         model: Order,
         include: {
