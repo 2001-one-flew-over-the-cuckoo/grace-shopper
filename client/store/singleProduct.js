@@ -34,9 +34,10 @@ export const fetchOneProduct = productId => {
 // need to review
 export const updateProductThunk = product => {
   return async dispatch => {
+    console.log('thunk hitting')
     try {
       await axios.put(`/api/products/${product.id}`, product)
-      dispatch(updateProductThunk(product))
+      dispatch(updateProduct(product))
     } catch (error) {
       console.error(error)
     }

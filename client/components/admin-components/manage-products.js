@@ -6,7 +6,6 @@ import {fetchOneProduct, updateProductThunk} from '../../store/singleProduct'
 class ManageProducts extends Component {
   constructor(props) {
     super(props)
-    console.log('props', props)
     const defaultState = {
       name: props.product.name,
       price: props.product.price,
@@ -31,12 +30,13 @@ class ManageProducts extends Component {
     // this.props.getProduct(this.props.product.id)
     const productId = this.props.product.id
     const updatedProduct = {
-      id: productId
-      // name: this.state.name,
-      // price: this.state.price,
-      // description: this.state.description,
-      // image: this.state.image
+      id: productId,
+      name: this.state.name,
+      price: this.state.price,
+      description: this.state.description,
+      image: this.state.image
     }
+    console.log('updatedProduct', updatedProduct)
     this.props.updateProductThunk(updatedProduct)
     // this.props.history.push(`/products/${productId}`) // to redirect
   }

@@ -21,9 +21,9 @@ const ProductForm = props => {
 
       <label htmlFor="description">Description</label>
       <input
-        type="text"
+        type="textarea"
         name="description"
-        value={props.descrption}
+        value={props.description}
         onChange={props.handleChange}
       />
 
