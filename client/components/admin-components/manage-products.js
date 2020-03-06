@@ -1,16 +1,17 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import ProductForm from './manage-products-form.js'
-import {fetchOneProduct} from '../../store/singleProduct'
+import {fetchOneProduct, updateProductThunk} from '../../store/singleProduct'
 
 class ManageProducts extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
+    console.log('props', props)
     const defaultState = {
-      name: '',
-      price: 0,
-      description: '',
-      image: ''
+      name: props.product.name,
+      price: props.product.price,
+      description: props.product.description,
+      image: props.product.image
     }
     this.state = defaultState
     this.handleChange = this.handleChange.bind(this)
@@ -18,23 +19,26 @@ class ManageProducts extends Component {
   }
 
   componentDidMount() {
-    console.log('props', this.props)
-    // this.setState({
-    //   name: this.props.product.name,
-    //   price: this.props.product.price,
-    //   description: this.props.product.description,
-    //   image: this.props.product.image
-    // })
-    const productId = this.props.match.params.productId
+    const productId = this.props.product.id
     this.props.getProduct(productId)
   }
 
   handleSubmit(event) {
     event.preventDefault()
     // Reset form to blank
-    this.setState(this.defaultState)
+    // this.setState(this.defaultState)
     //Add a function to re-render list after update
-    this.props.getProduct(this.props.product.id)
+    // this.props.getProduct(this.props.product.id)
+    const productId = this.props.product.id
+    const updatedProduct = {
+      id: productId
+      // name: this.state.name,
+      // price: this.state.price,
+      // description: this.state.description,
+      // image: this.state.image
+    }
+    this.props.updateProductThunk(updatedProduct)
+    // this.props.history.push(`/products/${productId}`) // to redirect
   }
 
   handleChange(event) {
@@ -44,6 +48,8 @@ class ManageProducts extends Component {
   }
 
   render() {
+    console.log('state', this.state)
+    console.log('this.props', this.props)
     return (
       <ProductForm
         name={this.state.name}
@@ -58,12 +64,13 @@ class ManageProducts extends Component {
 }
 
 const mapState = state => ({
-  product: state.product
+  product: state.singleProduct
 })
 
 const mapDispatch = dispatch => {
   return {
-    getProduct: productId => dispatch(fetchOneProduct(productId))
+    getProduct: productId => dispatch(fetchOneProduct(productId)),
+    updateProductThunk: product => dispatch(updateProductThunk(product))
   }
 }
 

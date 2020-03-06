@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 const GET_PRODUCT = 'GET_PRODUCT'
+const UPDATE_PRODUCT = 'UPDATE_PRODUCT'
 
 // initial state
 const defaultProduct = {}
@@ -8,6 +9,13 @@ const defaultProduct = {}
 const getProduct = product => {
   return {
     type: GET_PRODUCT,
+    product
+  }
+}
+
+const updateProduct = product => {
+  return {
+    type: UPDATE_PRODUCT,
     product
   }
 }
@@ -23,9 +31,23 @@ export const fetchOneProduct = productId => {
   }
 }
 
+// need to review
+export const updateProductThunk = product => {
+  return async dispatch => {
+    try {
+      await axios.put(`/api/products/${product.id}`, product)
+      dispatch(updateProductThunk(product))
+    } catch (error) {
+      console.error(error)
+    }
+  }
+}
+
 const oneProductReducer = (state = defaultProduct, action) => {
   switch (action.type) {
     case GET_PRODUCT:
+      return action.product
+    case UPDATE_PRODUCT:
       return action.product
     default:
       return state
