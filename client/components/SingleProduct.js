@@ -33,7 +33,10 @@ export class SingleProduct extends Component {
   render() {
     const {product, user} = this.props
     const isAdmin = user.isAdmin
-    if (this.state.showEditForm) return <ManageProducts product={product} />
+    if (this.state.showEditForm)
+      return (
+        <ManageProducts product={product} closeForm={this.handleClickToEdit} />
+      )
     else
       return (
         <div className="product">
