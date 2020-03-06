@@ -16,7 +16,7 @@ const ProductForm = props => {
         type="number"
         name="price"
         value={props.price}
-        onChange={props.handlChange}
+        onChange={props.handleChange}
       />
 
       <label htmlFor="description">Description</label>
@@ -24,7 +24,7 @@ const ProductForm = props => {
         type="text"
         name="description"
         value={props.descrption}
-        onChange={props.handlChange}
+        onChange={props.handleChange}
       />
 
       <label htmlFor="image">Image Link</label>
