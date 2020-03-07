@@ -1,7 +1,9 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {fetchOneProduct} from '../store/singleProduct'
+import {fetchOneProduct, updateProductThunk} from '../store/singleProduct'
 import Select from 'react-select'
+import {Link} from 'react-router-dom'
+import ManageProducts from './admin-components/manage-products'
 
 const options = [
   {value: 1, label: 1},
@@ -14,40 +16,65 @@ const options = [
 export class SingleProduct extends Component {
   constructor() {
     super()
+    this.state = {
+      showEditForm: false
+    }
+    this.handleClickToEdit = this.handleClickToEdit.bind(this)
   }
   componentDidMount() {
     const productId = this.props.match.params.productId
     this.props.fetchOneProduct(productId)
   }
+  handleClickToEdit() {
+    this.setState({
+      showEditForm: !this.state.showEditForm
+    })
+  }
   render() {
-    const {product} = this.props
-
-    return (
-      <div className="product">
-        <img src={product.image} />
-        <div>
-          <h2>{product.name}</h2>
-          <h3>${(product.price / 100).toFixed(2)}</h3>
-          <h3>{product.description}</h3>
-          <h3>
-            Quantity: <Select options={options} />
-          </h3>
-          <button>Add to Cart</button>
+    const {product, user} = this.props
+    const isAdmin = user.isAdmin
+    if (this.state.showEditForm) {
+      return (
+        <ManageProducts product={product} closeForm={this.handleClickToEdit} />
+      )
+    } else
+      return (
+        <div className="product">
+          <img src={product.image} />
+          <div>
+            <h2>{product.name}</h2>
+            <h3>${(product.price / 100).toFixed(2)}</h3>
+            <h3>{product.description}</h3>
+            <h3>
+              Quantity: <Select options={options} />
+            </h3>
+            <button>Add to Cart</button>
+          </div>
+          <div>
+            {isAdmin === true ? (
+              <button type="button" onClick={this.handleClickToEdit}>
+                Edit Product
+              </button>
+            ) : (
+              <h1 />
+            )}
+          </div>
         </div>
-      </div>
-    )
+      )
   }
 }
 
 const mapState = state => {
   return {
-    product: state.singleProduct
+    product: state.singleProduct,
+    user: state.user
   }
 }
 
 const mapDispatch = dispatch => {
   return {
-    fetchOneProduct: productId => dispatch(fetchOneProduct(productId))
+    fetchOneProduct: productId => dispatch(fetchOneProduct(productId)),
+    updateProductThunk: product => dispatch(updateProductThunk(product))
   }
 }
 
