@@ -1,7 +1,9 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {withRouter} from 'react-router-dom'
 import ProductForm from './manage-products-form.js'
 import {fetchOneProduct, updateProductThunk} from '../../store/singleProduct'
+import {removeProductThunk} from '../../store/products'
 
 class ManageProducts extends Component {
   constructor(props) {
@@ -16,6 +18,7 @@ class ManageProducts extends Component {
     this.state = defaultState
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleClick = this.handleClick.bind(this)
   }
 
   // componentDidMount() {
@@ -36,7 +39,6 @@ class ManageProducts extends Component {
       description: this.state.description,
       image: this.state.image
     }
-    console.log('updatedProduct', updatedProduct)
     this.props.updateProductThunk(updatedProduct)
     this.props.closeForm()
   }
@@ -47,18 +49,30 @@ class ManageProducts extends Component {
     })
   }
 
+  handleClick(product) {
+    this.props.removeProductThunk(product)
+    this.props.history.push('/products')
+  }
+
   render() {
-    console.log('state', this.state)
     console.log('this.props', this.props)
     return (
-      <ProductForm
-        name={this.state.name}
-        price={this.state.price}
-        description={this.state.description}
-        image={this.state.image}
-        handleSubmit={this.handleSubmit}
-        handleChange={this.handleChange}
-      />
+      <div>
+        <ProductForm
+          name={this.state.name}
+          price={this.state.price}
+          description={this.state.description}
+          image={this.state.image}
+          handleSubmit={this.handleSubmit}
+          handleChange={this.handleChange}
+        />
+        <button
+          type="button"
+          onClick={() => this.handleClick(this.props.product)}
+        >
+          Remove Product
+        </button>
+      </div>
     )
   }
 }
@@ -70,8 +84,9 @@ const mapState = state => ({
 const mapDispatch = dispatch => {
   return {
     // getProduct: productId => dispatch(fetchOneProduct(productId)),
-    updateProductThunk: product => dispatch(updateProductThunk(product))
+    updateProductThunk: product => dispatch(updateProductThunk(product)),
+    removeProductThunk: product => dispatch(removeProductThunk(product))
   }
 }
 
-export default connect(mapState, mapDispatch)(ManageProducts)
+export default withRouter(connect(mapState, mapDispatch)(ManageProducts))

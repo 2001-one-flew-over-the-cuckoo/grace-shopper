@@ -37,3 +37,20 @@ router.put('/:productId', async (req, res, next) => {
     next(error)
   }
 })
+
+router.delete('/:productId', async (req, res, next) => {
+  try {
+    let productById = await Product.findByPk(req.params.productId)
+    if (!productById) res.sendStatus(404)
+    else {
+      await Product.destroy({
+        where: {
+          id: req.params.productId
+        }
+      })
+      res.sendStatus(204)
+    }
+  } catch (error) {
+    next(error)
+  }
+})

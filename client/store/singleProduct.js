@@ -31,7 +31,6 @@ export const fetchOneProduct = productId => {
   }
 }
 
-// need to review
 export const updateProductThunk = product => {
   return async dispatch => {
     try {
