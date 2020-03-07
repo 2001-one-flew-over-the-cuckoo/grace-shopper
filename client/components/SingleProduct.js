@@ -33,11 +33,11 @@ export class SingleProduct extends Component {
   render() {
     const {product, user} = this.props
     const isAdmin = user.isAdmin
-    if (this.state.showEditForm)
+    if (this.state.showEditForm) {
       return (
         <ManageProducts product={product} closeForm={this.handleClickToEdit} />
       )
-    else
+    } else
       return (
         <div className="product">
           <img src={product.image} />
@@ -56,7 +56,7 @@ export class SingleProduct extends Component {
                 Edit Product
               </button>
             ) : (
-              <h1>no</h1>
+              <h1 />
             )}
           </div>
         </div>

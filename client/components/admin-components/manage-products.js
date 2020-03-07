@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import ProductForm from './manage-products-form.js'
 import {fetchOneProduct, updateProductThunk} from '../../store/singleProduct'
-import {removeProductThunk} from '../../store/products'
+import {removeProductThunk, addProductThunk} from '../../store/products'
 
 class ManageProducts extends Component {
   constructor(props) {
@@ -28,18 +28,30 @@ class ManageProducts extends Component {
 
   handleSubmit(event) {
     event.preventDefault()
+    const priceInCents = this.state.price * 100
+
+    if (this.props.history.location.pathname === '/products') {
+      const newProduct = {
+        name: this.state.name,
+        price: priceInCents,
+        description: this.state.description,
+        image: this.state.image
+      }
+      this.props.addProductThunk(newProduct)
+    } else {
+      const productId = this.props.product.id
+      const updatedProduct = {
+        id: productId,
+        name: this.state.name,
+        price: priceInCents,
+        description: this.state.description,
+        image: this.state.image
+      }
+      this.props.updateProductThunk(updatedProduct)
+    }
+
     //Add a function to re-render list after update
     // this.props.getProduct(this.props.product.id)
-    const productId = this.props.product.id
-    const priceInCents = this.state.price * 100
-    const updatedProduct = {
-      id: productId,
-      name: this.state.name,
-      price: priceInCents,
-      description: this.state.description,
-      image: this.state.image
-    }
-    this.props.updateProductThunk(updatedProduct)
     this.props.closeForm()
   }
 
@@ -56,8 +68,22 @@ class ManageProducts extends Component {
 
   render() {
     console.log('this.props', this.props)
+    console.log(
+      'this.props.history.location.pathname',
+      this.props.history.location.pathname
+    )
     return (
       <div>
+        {this.props.history.location.pathname === '/products' ? (
+          <div />
+        ) : (
+          <button
+            type="button"
+            onClick={() => this.handleClick(this.props.product)}
+          >
+            Remove Product
+          </button>
+        )}
         <ProductForm
           name={this.state.name}
           price={this.state.price}
@@ -66,12 +92,6 @@ class ManageProducts extends Component {
           handleSubmit={this.handleSubmit}
           handleChange={this.handleChange}
         />
-        <button
-          type="button"
-          onClick={() => this.handleClick(this.props.product)}
-        >
-          Remove Product
-        </button>
       </div>
     )
   }
@@ -85,7 +105,8 @@ const mapDispatch = dispatch => {
   return {
     // getProduct: productId => dispatch(fetchOneProduct(productId)),
     updateProductThunk: product => dispatch(updateProductThunk(product)),
-    removeProductThunk: product => dispatch(removeProductThunk(product))
+    removeProductThunk: product => dispatch(removeProductThunk(product)),
+    addProductThunk: product => dispatch(addProductThunk(product))
   }
 }
 

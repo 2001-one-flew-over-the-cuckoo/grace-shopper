@@ -54,3 +54,13 @@ router.delete('/:productId', async (req, res, next) => {
     next(error)
   }
 })
+
+router.post('/', async (req, res, next) => {
+  try {
+    const newProduct = await Product.create(req.body)
+    //we should refactor later, anywhere we accept req.body - for security
+    res.status(201).send(newProduct)
+  } catch (error) {
+    next(error)
+  }
+})
