@@ -9,12 +9,27 @@ class ManageProducts extends Component {
   constructor(props) {
     super(props)
     const priceInDollars = (props.product.price / 100).toFixed(2)
-    const defaultState = {
-      name: props.product.name,
-      price: priceInDollars,
-      description: props.product.description,
-      image: props.product.image
+    //conditional - state is either nothing, or come from props.product
+    //if it comes from /products - name = ''...
+    //else, autopopulate it
+    let defaultState
+    if (this.props.history.location.pathname === '/products') {
+      defaultState = {
+        name: '',
+        price: 0,
+        description: '',
+        image:
+          'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60'
+      }
+    } else {
+      defaultState = {
+        name: props.product.name,
+        price: priceInDollars,
+        description: props.product.description,
+        image: props.product.image
+      }
     }
+
     this.state = defaultState
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)

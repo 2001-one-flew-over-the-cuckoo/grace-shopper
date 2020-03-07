@@ -25,6 +25,7 @@ router.get('/:productId', async (req, res, next) => {
 // still need to permission this but need to refer to auther workshop solution
 router.put('/:productId', async (req, res, next) => {
   try {
+    console.log(req)
     let productById = await Product.findByPk(req.params.productId)
     if (!productById) {
       res.sendStatus(404)

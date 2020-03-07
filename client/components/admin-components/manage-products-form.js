@@ -27,7 +27,7 @@ const ProductForm = props => {
         onChange={props.handleChange}
       />
 
-      <label htmlFor="image">Image Link</label>
+      <label htmlFor="image">Image Link (optional)</label>
       <input
         type="text"
         name="image"
