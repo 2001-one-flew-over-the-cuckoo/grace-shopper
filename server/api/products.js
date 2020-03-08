@@ -30,9 +30,13 @@ router.put('/:productId', async (req, res, next) => {
     if (!productById) {
       res.sendStatus(404)
     } else {
-      console.log('req.body', req.body)
-      const updatedProduct = await productById.update(req.body)
-      res.send(updatedProduct)
+      const formData = {}
+      if (req.body.name) formData.name = req.body.name
+      if (req.body.price) formData.price = req.body.price
+      if (req.body.description) formData.description = req.body.description
+      if (req.body.image) formData.image = req.body.image
+      const updatedProduct = await productById.update(formData)
+      res.send(updatedProduct[1][0])
     }
   } catch (error) {
     next(error)
@@ -58,8 +62,16 @@ router.delete('/:productId', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
-    const newProduct = await Product.create(req.body)
-    //we should refactor later, anywhere we accept req.body - for security
+    const formData = {}
+    if (req.body.name) {
+      formData.name = req.body.name
+    } else {
+      res.status(206).send('Name is required')
+    }
+    if (req.body.price) formData.price = req.body.price
+    if (req.body.description) formData.description = req.body.description
+    if (req.body.image) formData.image = req.body.image
+    const newProduct = await Product.create(formData)
     res.status(201).send(newProduct)
   } catch (error) {
     next(error)
