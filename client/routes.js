@@ -7,6 +7,7 @@ import {me} from './store'
 import AllProducts from './components/AllProducts'
 import SingleProduct from './components/SingleProduct'
 import ManageProducts from './components/admin-components/manage-products'
+import {Cart} from './components'
 
 /**
  * COMPONENT
@@ -35,6 +36,7 @@ class Routes extends Component {
           <Switch>
             {/* Routes placed here are only available after logging in */}
             <Route path="/home" component={UserHome} />
+            <Route path="/cart" component={Cart} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}
