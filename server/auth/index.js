@@ -62,6 +62,8 @@ router.post('/logout', (req, res) => {
 })
 
 router.get('/me', async (req, res) => {
+  console.log('req', req)
+  console.log('req.user', req.user)
   const user = await User.findOne({
     where: {
       id: req.user.id

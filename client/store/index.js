@@ -6,7 +6,6 @@ import user from './user'
 import admin from './admin'
 import singleProduct from './singleProduct'
 import products from './products'
-import orders from './orders'
 import cart from './cart'
 
 const reducer = combineReducers({
@@ -14,7 +13,6 @@ const reducer = combineReducers({
   admin: admin,
   singleProduct: singleProduct,
   products: products,
-  orders: orders,
   cart: cart
 })
 
