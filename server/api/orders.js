@@ -4,13 +4,27 @@ module.exports = router
 
 router.post('/:productId', async (req, res, next) => {
   try {
-    let order
-    const product = await Product.findByPk(req.params.productId)
+    let cart
+    const productById = await Product.findByPk(req.params.productId)
+    // console.log('productById', productById)
+    // console.log('req.user', req.user)
 
     if (req.user) {
-      console.log('req.user', req.user)
+      // console.log('req.user hit', req.user)
       // find user cart
-      order = await Order.findOne({
+      cart = await Order.findOne({
+        where: {
+          userId: req.user.id,
+          completed: false
+        }
+        // include: [
+        //   {
+        //     model: Product,
+        //     required: false
+        //   }
+        // ]
+      })
+      const cartBefore = await Order.findOne({
         where: {
           userId: req.user.id,
           completed: false
@@ -22,29 +36,46 @@ router.post('/:productId', async (req, res, next) => {
           }
         ]
       })
-      order.addProduct(product)
-      order.save()
+      cartBefore.products.map(product =>
+        console.log('cartv1 id, name', product.id, product.name)
+      )
+      await cart.addProduct(productById)
+      const cartAfter = await Order.findOne({
+        where: {
+          userId: req.user.id,
+          completed: false
+        },
+        include: [
+          {
+            model: Product,
+            required: false
+          }
+        ]
+      })
+      cartAfter.products.map(product =>
+        console.log('cartv2 id, name', product.id, product.name)
+      )
 
-      order = order.products
+      cart = cart.products
     } else if (req.session.cart) {
-      console.log('req.session.cart', req.session.cart)
+      // console.log('req.session.cart', req.session.cart)
       // use session cart
-      order = req.session.cart
-      order.push(product)
+      cart = req.session.cart
+      cart.push(productById)
       req.session.save()
     } else {
-      // make new order/cart
-      order = Order.build({})
-      order.push(product)
-      req.session.cart = order
+      // make new cart/cart
+      cart = Order.build({})
+      cart.push(productById)
+      req.session.cart = cart
       req.session.save()
     }
 
-    console.log('order', order)
+    // console.log('order', order)
 
-    res.json(order)
+    res.json(cart)
   } catch (error) {
-    console.log('error', error)
+    // console.log('error', error)
     next(error)
   }
 })
