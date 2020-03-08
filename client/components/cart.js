@@ -1,13 +1,19 @@
-import React, {Component} from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {me, removeProductFromCart} from '../store/user'
+import {useHistory} from 'react-router-dom'
 
 const Cart = props => {
   // console.log(props)
+  let history = useHistory()
   const handleDeleteClick = event => {
     event.preventDefault()
     props.removeProductFromCart(event.target.id)
+  }
+  const checkoutHandler = event => {
+    event.preventDefault()
+    history.push('/checkout')
   }
   const ordersArr = props.user.orders
   if (ordersArr.length > 0 && ordersArr[0].products.length > 0) {
@@ -38,7 +44,7 @@ const Cart = props => {
             ).toFixed(2)}
           </div>
         </div>
-        <button>Checkout</button>
+        <button onClick={checkoutHandler}>Checkout</button>
       </div>
     )
   } else {

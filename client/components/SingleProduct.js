@@ -6,13 +6,13 @@ import Select from 'react-select'
 import {Link} from 'react-router-dom'
 import ManageProducts from './admin-components/manage-products'
 
-const options = [
-  {value: 1, label: 1},
-  {value: 2, label: 2},
-  {value: 3, label: 3},
-  {value: 4, label: 4},
-  {value: 5, label: 5}
-]
+// const options = [
+//   {value: 1, label: 1},
+//   {value: 2, label: 2},
+//   {value: 3, label: 3},
+//   {value: 4, label: 4},
+//   {value: 5, label: 5}
+// ]
 
 export class SingleProduct extends Component {
   constructor() {
@@ -55,9 +55,9 @@ export class SingleProduct extends Component {
             <h2>{product.name}</h2>
             <h3>${(product.price / 100).toFixed(2)}</h3>
             <h3>{product.description}</h3>
-            <h3>
+            {/* <h3>
               Quantity: <Select options={options} />
-            </h3>
+            </h3> */}
             <button type="button" onClick={this.addToCartClick}>
               Add to Cart
             </button>
