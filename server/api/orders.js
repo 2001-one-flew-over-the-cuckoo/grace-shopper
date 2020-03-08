@@ -11,43 +11,46 @@ router.post('/:productId', async (req, res, next) => {
     if (req.user) {
       console.log('hitting router.post')
       // find user cart
-      cart = await Order.findOne({
+      cart = await Order.findOrCreate({
         where: {
           userId: req.user.id,
           completed: false
         }
       })
-      const cartBefore = await Order.findOne({
-        where: {
-          userId: req.user.id,
-          completed: false
-        },
-        include: [
-          {
-            model: Product,
-            required: false
-          }
-        ]
-      })
-      cartBefore.products.map(product =>
-        console.log('cartv1 id, name', product.id, product.name)
-      )
-      await cart.addProduct(productById)
-      const cartAfter = await Order.findOne({
-        where: {
-          userId: req.user.id,
-          completed: false
-        },
-        include: [
-          {
-            model: Product,
-            required: false
-          }
-        ]
-      })
-      cartAfter.products.map(product =>
-        console.log('cartv2 id, name', product.id, product.name)
-      )
+
+      console.log('cart from express routes', cart[0])
+
+      // const cartBefore = await Order.findOne({
+      //   where: {
+      //     userId: req.user.id,
+      //     completed: false
+      //   },
+      //   include: [
+      //     {
+      //       model: Product,
+      //       required: false
+      //     }
+      //   ]
+      // })
+      // cartBefore.products.map(product =>
+      //   console.log('cartv1 id, name', product.id, product.name)
+      // )
+      await cart[0].addProduct(productById)
+      // const cartAfter = await Order.findOne({
+      //   where: {
+      //     userId: req.user.id,
+      //     completed: false
+      //   },
+      //   include: [
+      //     {
+      //       model: Product,
+      //       required: false
+      //     }
+      //   ]
+      // })
+      // cartAfter.products.map(product =>
+      //   console.log('cartv2 id, name', product.id, product.name)
+      // )
 
       const updatedOrders = await Order.findAll({
         where: {
