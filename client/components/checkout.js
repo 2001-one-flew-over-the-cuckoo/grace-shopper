@@ -3,15 +3,22 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 
 const Checkout = props => {
+  const confirmHandler = event => {
+    event.preventDefault()
+    // Thunk to change status on back end goes here
+    // props.confirmCheckout()
+  }
   return (
     <div>
-      <button>Confirm Checkout</button>
+      <button onClick={confirmHandler}>Confirm Checkout</button>
     </div>
   )
 }
 
-const mapState = state => {}
+// const mapState = state => {}
 
-const mapDispatch = dispatch => {}
+const mapDispatch = dispatch => ({
+  confirmCheckout: () => dispatch(confirmCheckout())
+})
 
-export default connect(mapState, mapDispatch)(Checkout)
+export default connect(null, mapDispatch)(Checkout)
