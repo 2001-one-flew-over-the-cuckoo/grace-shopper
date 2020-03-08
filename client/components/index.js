@@ -8,3 +8,8 @@ export {default as UserHome} from './user-home'
 export {Login, Signup} from './auth-form'
 export {AdminHome} from './admin-home'
 export {default as Cart} from './cart'
+export {default as Checkout} from './checkout'
+export {default as AllProducts} from './AllProducts'
+export {SingleProduct} from './SingleProduct'
+
+export {default as ManageProducts} from './admin-components/manage-products'
