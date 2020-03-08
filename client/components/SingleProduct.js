@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchOneProduct, updateProductThunk} from '../store/singleProduct'
+import {addToCart} from '../store'
 import Select from 'react-select'
 import {Link} from 'react-router-dom'
 import ManageProducts from './admin-components/manage-products'
@@ -20,6 +21,7 @@ export class SingleProduct extends Component {
       showEditForm: false
     }
     this.handleClickToEdit = this.handleClickToEdit.bind(this)
+    this.addToCartClick = this.addToCartClick.bind(this)
   }
   componentDidMount() {
     const productId = this.props.match.params.productId
@@ -29,6 +31,12 @@ export class SingleProduct extends Component {
     this.setState({
       showEditForm: !this.state.showEditForm
     })
+  }
+
+  addToCartClick(event) {
+    event.preventDefault()
+    console.log('this.props.product', this.props.product)
+    this.props.addToCart(this.props.product.id)
   }
   render() {
     const {product, user} = this.props
@@ -48,7 +56,9 @@ export class SingleProduct extends Component {
             <h3>
               Quantity: <Select options={options} />
             </h3>
-            <button>Add to Cart</button>
+            <button type="button" onClick={this.addToCartClick}>
+              Add to Cart
+            </button>
           </div>
           <div>
             {isAdmin === true ? (
@@ -74,7 +84,10 @@ const mapState = state => {
 const mapDispatch = dispatch => {
   return {
     fetchOneProduct: productId => dispatch(fetchOneProduct(productId)),
-    updateProductThunk: product => dispatch(updateProductThunk(product))
+    updateProductThunk: product => dispatch(updateProductThunk(product)),
+    addToCart: productId => {
+      dispatch(addToCart(productId))
+    }
   }
 }
 
