@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Product} = require('../db/models')
+const {Product, User} = require('../db/models')
 module.exports = router
 
 router.get('/', async (req, res, next) => {
@@ -14,6 +14,7 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:productId', async (req, res, next) => {
   try {
+    console.log(req.session)
     const productById = await Product.findByPk(req.params.productId)
     res.json(productById)
     if (!productById) res.sendStatus(404)
@@ -22,21 +23,29 @@ router.get('/:productId', async (req, res, next) => {
   }
 })
 
-// still need to permission this but need to refer to auther workshop solution
+// eslint-disable-next-line complexity
 router.put('/:productId', async (req, res, next) => {
   try {
-    console.log(req)
-    let productById = await Product.findByPk(req.params.productId)
-    if (!productById) {
-      res.sendStatus(404)
+    if (req.session.passport) {
+      const user = await User.findByPk(req.session.passport.user)
+      const isAnAdmin = user.isAdmin
+      if (isAnAdmin) {
+        let productById = await Product.findByPk(req.params.productId)
+        if (!productById) {
+          res.sendStatus(404)
+        } else {
+          const formData = {}
+          formData.id = req.body.id
+          if (req.body.name) formData.name = req.body.name
+          if (req.body.price) formData.price = req.body.price
+          if (req.body.description) formData.description = req.body.description
+          if (req.body.image) formData.image = req.body.image
+          const updatedProduct = await productById.update(formData)
+          res.send(updatedProduct)
+        }
+      }
     } else {
-      const formData = {}
-      if (req.body.name) formData.name = req.body.name
-      if (req.body.price) formData.price = req.body.price
-      if (req.body.description) formData.description = req.body.description
-      if (req.body.image) formData.image = req.body.image
-      const updatedProduct = await productById.update(formData)
-      res.send(updatedProduct[1][0])
+      res.sendStatus(403)
     }
   } catch (error) {
     next(error)
