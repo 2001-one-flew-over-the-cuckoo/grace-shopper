@@ -8,6 +8,7 @@ const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER'
 const USER_ADD_TO_CART = 'USER_ADD_TO_CART'
 const USER_REMOVE_FROM_CART = 'USER_REMOVE_FROM_CART'
+const USER_CHECKOUT = 'USER_CHECKOUT'
 /**
  * INITIAL STATE
  */
@@ -20,6 +21,9 @@ const getUser = user => ({type: GET_USER, user})
 const removeUser = () => ({type: REMOVE_USER})
 const userAddToCart = orders => ({type: USER_ADD_TO_CART, orders})
 const userRemoveFromCart = orders => ({type: USER_REMOVE_FROM_CART, orders})
+const userCheckout = () => ({
+  type: USER_CHECKOUT
+})
 /**
  * THUNK CREATORS
  */
@@ -77,6 +81,17 @@ export const removeProductFromCart = productId => async dispatch => {
     console.error(error)
   }
 }
+
+export const userCheckoutThunk = () => async dispatch => {
+  try {
+    console.log('starting userCheckOutThunk')
+    const {data} = await axios.put('/api/orders/checkout')
+    console.log('data from checkout thunk', data)
+    dispatch(userCheckout(data))
+  } catch (error) {
+    console.error(error)
+  }
+}
 /**
  * REDUCER
  */
@@ -92,6 +107,11 @@ export default function(state = defaultUser, action) {
         orders: action.orders
       }
     case USER_REMOVE_FROM_CART:
+      return {
+        ...state,
+        orders: action.orders
+      }
+    case USER_CHECKOUT:
       return {
         ...state,
         orders: action.orders

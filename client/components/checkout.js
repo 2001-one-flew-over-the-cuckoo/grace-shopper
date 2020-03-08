@@ -1,17 +1,25 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
+import {userCheckoutThunk} from '../store/user'
 
 const Checkout = props => {
+  const handleConfirmCheckout = event => {
+    event.preventDefault()
+    props.userCheckoutThunk()
+    // history.push to thank you page
+  }
   return (
     <div>
-      <button>Confirm Checkout</button>
+      <button onClick={handleConfirmCheckout}>Confirm Checkout</button>
     </div>
   )
 }
 
-const mapState = state => {}
+const mapState = state => ({})
 
-const mapDispatch = dispatch => {}
+const mapDispatch = dispatch => ({
+  userCheckoutThunk: () => dispatch(userCheckoutThunk())
+})
 
-export default connect(mapState, mapDispatch)(Checkout)
+export default connect(null, mapDispatch)(Checkout)
