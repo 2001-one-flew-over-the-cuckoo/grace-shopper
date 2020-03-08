@@ -1,10 +1,14 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {me} from '../store/user'
+import {me, removeProductFromCart} from '../store/user'
 
 const Cart = props => {
   // console.log(props)
+  const handleDeleteClick = event => {
+    event.preventDefault()
+    props.removeProductFromCart(event.target.id)
+  }
   const ordersArr = props.user.orders
   if (ordersArr.length > 0 && ordersArr[0].products.length > 0) {
     let cart = props.user.orders[0].products
@@ -18,7 +22,9 @@ const Cart = props => {
               <div>{prodInCart.name}</div>
               <div>Quantity (drop-down to be added)</div>
               <div>{(prodInCart.price / 100).toFixed(2)}</div>
-              <div>[x]</div>
+              <button onClick={handleDeleteClick} id={prodInCart.id}>
+                [x]
+              </button>
             </div>
           )
         })}
@@ -47,7 +53,9 @@ const mapState = state => {
 }
 const mapDispatch = dispatch => {
   return {
-    fetchMe: () => dispatch(me())
+    fetchMe: () => dispatch(me()),
+    removeProductFromCart: productId =>
+      dispatch(removeProductFromCart(productId))
   }
 }
 
