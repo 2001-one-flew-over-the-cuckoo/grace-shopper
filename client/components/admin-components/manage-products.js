@@ -82,11 +82,11 @@ class ManageProducts extends Component {
   }
 
   render() {
-    console.log('this.props', this.props)
-    console.log(
-      'this.props.history.location.pathname',
-      this.props.history.location.pathname
-    )
+    // console.log('this.props', this.props)
+    // console.log(
+    //   'this.props.history.location.pathname',
+    //   this.props.history.location.pathname
+    // )
     return (
       <div>
         {this.props.history.location.pathname === '/products' ? (

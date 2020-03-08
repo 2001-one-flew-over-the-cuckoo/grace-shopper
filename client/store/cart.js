@@ -1,13 +1,14 @@
 import axios from 'axios'
 
 const ADD_TO_CART = 'ADD_TO_CART'
-const addedToCart = cart => {
+const addedToCart = (product, userId) => {
   return {
     type: ADD_TO_CART,
-    cart
+    product,
+    userId
   }
 }
-export const addToCart = productId => async dispatch => {
+export const addToCartThunk = productId => async dispatch => {
   try {
     const {data} = await axios.post(`/api/orders/${productId}`)
     dispatch(addedToCart(data))
@@ -21,7 +22,7 @@ const initialState = []
 export default function(state = initialState, action) {
   switch (action.type) {
     case ADD_TO_CART:
-      return action.cart
+      return [...state, action.product]
     default:
       return state
   }

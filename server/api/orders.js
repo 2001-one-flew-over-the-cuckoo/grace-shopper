@@ -5,24 +5,17 @@ module.exports = router
 router.post('/:productId', async (req, res, next) => {
   try {
     let cart
+    console.log('req.params.productId', req.params.productId)
     const productById = await Product.findByPk(req.params.productId)
-    // console.log('productById', productById)
-    // console.log('req.user', req.user)
-
+    // for logged in user
     if (req.user) {
-      // console.log('req.user hit', req.user)
+      console.log('hitting router.post')
       // find user cart
       cart = await Order.findOne({
         where: {
           userId: req.user.id,
           completed: false
         }
-        // include: [
-        //   {
-        //     model: Product,
-        //     required: false
-        //   }
-        // ]
       })
       const cartBefore = await Order.findOne({
         where: {
@@ -56,7 +49,19 @@ router.post('/:productId', async (req, res, next) => {
         console.log('cartv2 id, name', product.id, product.name)
       )
 
-      cart = cart.products
+      const updatedOrders = await Order.findAll({
+        where: {
+          userId: req.user.id
+        },
+        include: [
+          {
+            model: Product,
+            required: false
+          }
+        ]
+      })
+      res.json(updatedOrders)
+      // anonymous user with a cart
     } else if (req.session.cart) {
       // console.log('req.session.cart', req.session.cart)
       // use session cart
@@ -70,10 +75,6 @@ router.post('/:productId', async (req, res, next) => {
       req.session.cart = cart
       req.session.save()
     }
-
-    // console.log('order', order)
-
-    res.json(cart)
   } catch (error) {
     // console.log('error', error)
     next(error)
