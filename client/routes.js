@@ -33,13 +33,10 @@ class Routes extends Component {
           component={ManageProducts}
         />
         <Route path="/checkout" component={Checkout} />
-        {isLoggedIn && (
-          <Switch>
-            {/* Routes placed here are only available after logging in */}
-            <Route path="/home" component={UserHome} />
-            <Route path="/cart" component={Cart} />
-          </Switch>
-        )}
+        <Switch>
+          <Route path="/home" component={UserHome} />
+          <Route path="/cart" component={Cart} />
+        </Switch>
         {/* Displays our Login component as a fallback */}
         <Route component={Login} />
       </Switch>
@@ -47,6 +44,13 @@ class Routes extends Component {
   }
 }
 
+// {/* {isLoggedIn && (
+//   <Switch>
+//     {/* Routes placed here are only available after logging in */}
+//     <Route path="/home" component={UserHome} />
+//     <Route path="/cart" component={Cart} />
+//   </Switch>
+// )} */}
 /**
  * CONTAINER
  */

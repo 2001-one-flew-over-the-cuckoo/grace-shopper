@@ -26,14 +26,14 @@ router.post('/:productId', async (req, res, next) => {
           }
         ]
       })
-      req.session.products = []
+      req.session.cart[0].products = []
       req.session.save()
       res.json(updatedOrders)
     } else {
       // not logged in
       req.session.cart.products.push(productById)
       req.session.save()
-      res.json(res.session.cart)
+      res.json([req.session.cart]) // sends whole cart but as an array bc user orders sent as an array
     }
   } catch (error) {
     next(error)
@@ -64,12 +64,15 @@ router.delete('/:productId', async (req, res, next) => {
       })
       res.json(updatedOrders)
     } else {
-      // need to test once front end up
-      // req.session.cart.products = req.session.cart.products.filter(product => {
-      //   product.id !== req.params.productId
+      // const newCart = req.session.cart.products.filter(product => {
+      //   parseInt(product.id) !== parseInt(req.params.productId)
       // })
-      req.session.save()
-      res.json(req.session.cart)
+      // not totally working yet... keeps deleting whole cart. front end seems ok though
+      console.log('req.session.cart.products', req.session.cart.products)
+      console.log('req.params.productId', parseInt(req.params.productId))
+      // req.session.cart.products = newCart
+      // req.session.save()
+      // res.json([req.session.cart])
     }
   } catch (error) {
     next(error)

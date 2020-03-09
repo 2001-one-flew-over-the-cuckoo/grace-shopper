@@ -334,7 +334,8 @@ var SingleProduct = /*#__PURE__*/function (_Component) {
     value: function addToCartClick(event) {
       event.preventDefault(); // console.log('this.props.product', this.props.product)
 
-      this.props.userAddCartThunk(this.props.product.id);
+      this.props.userAddCartThunk(this.props.product.id); // we can use same thunk/reducer for both guest and user. the cart would just end up on an empty user
+      // so we wouldn't need a separate cart = [] reducer in the store
     }
   }, {
     key: "render",
@@ -842,8 +843,9 @@ var Cart = function Cart(props) {
   var checkoutHandler = function checkoutHandler(event) {
     event.preventDefault();
     history.push('/checkout');
-  }; // console.log(props.user)
+  };
 
+  console.log('props in cart', props);
 
   if (props.user.orders === undefined || props.user.orders.length === 0) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "You have no items in your cart.");
@@ -852,9 +854,11 @@ var Cart = function Cart(props) {
     if (props.user) cartObj = props.user.orders.find(function (order) {
       return order.completed === false;
     }); // how to access req.session on the front end? send into thunk
-    else if (req.session.cart.products > 0) {
-        cartObj = req.session.cart;
-        console.log('req.session.cart', req.session.cart);
+    else {
+        console.log('no props.user'); // if (props.cart.products > 0) {
+
+        cartObj = props.cart;
+        console.log('props.cart', props.cart);
       }
 
     if (cartObj.products.length > 0) {
@@ -884,7 +888,8 @@ var Cart = function Cart(props) {
 
 var mapState = function mapState(state) {
   return {
-    user: state.user
+    user: state.user,
+    cart: state.cart
   };
 };
 
@@ -1270,7 +1275,7 @@ var Routes = /*#__PURE__*/function (_Component) {
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
         path: "/checkout",
         component: _components__WEBPACK_IMPORTED_MODULE_4__["Checkout"]
-      }), isLoggedIn && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
         path: "/home",
         component: _components__WEBPACK_IMPORTED_MODULE_4__["UserHome"]
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
@@ -1283,7 +1288,14 @@ var Routes = /*#__PURE__*/function (_Component) {
   }]);
 
   return Routes;
-}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]); // {/* {isLoggedIn && (
+//   <Switch>
+//     {/* Routes placed here are only available after logging in */}
+//     <Route path="/home" component={UserHome} />
+//     <Route path="/cart" component={Cart} />
+//   </Switch>
+// )} */}
+
 /**
  * CONTAINER
  */
@@ -1438,6 +1450,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "guestAddToCartThunk", function() { return guestAddToCartThunk; });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
@@ -1445,10 +1463,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 var GUEST_ADD_TO_CART = 'GUEST_ADD_TO_CART'; // const CHECKOUT = 'CHECKOUT'
 
-var guestAddToCart = function guestAddToCart(product, userId) {
+var guestAddToCart = function guestAddToCart(allProductsInCart) {
   return {
     type: GUEST_ADD_TO_CART,
-    product: product
+    allProductsInCart: allProductsInCart
   };
 }; // const checkout = () => {
 //   return {
@@ -1473,21 +1491,23 @@ var guestAddToCartThunk = function guestAddToCartThunk(productId) {
               case 3:
                 _ref2 = _context.sent;
                 data = _ref2.data;
-                dispatch(addedToCart(data));
-                _context.next = 11;
+                // will need to change route to /cart
+                dispatch(guestAddToCart(data));
+                console.log('recieving req.session.cart from api', data);
+                _context.next = 12;
                 break;
 
-              case 8:
-                _context.prev = 8;
+              case 9:
+                _context.prev = 9;
                 _context.t0 = _context["catch"](0);
                 console.error(_context.t0);
 
-              case 11:
+              case 12:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[0, 8]]);
+        }, _callee, null, [[0, 9]]);
       }));
 
       return function (_x) {
@@ -1495,15 +1515,21 @@ var guestAddToCartThunk = function guestAddToCartThunk(productId) {
       };
     }()
   );
-}; // const initialState = []
-
+};
+var initialState = {
+  products: []
+};
 /* harmony default export */ __webpack_exports__["default"] = (function () {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
   switch (action.type) {
-    // case GUEST_ADD_TO_CART:
-    //   return [...state, action.product]
+    case GUEST_ADD_TO_CART:
+      return _objectSpread({}, state, {
+        products: [action.products]
+      });
+    // refreshes the cart based on session.cart
+
     default:
       return state;
   }
@@ -26352,7 +26378,7 @@ if (typeof WebSocket !== 'undefined') {
 
 if (typeof window === 'undefined') {
   try {
-    NodeWebSocket = __webpack_require__(/*! ws */ 1);
+    NodeWebSocket = __webpack_require__(/*! ws */ 5);
   } catch (e) { }
 }
 
@@ -40752,7 +40778,7 @@ Tokenizer.prototype._emitPartial = function(value) {
 module.exports = Stream;
 
 var Parser = __webpack_require__(/*! ./Parser.js */ "./node_modules/htmlparser2/lib/Parser.js");
-var WritableStream = __webpack_require__(/*! readable-stream */ 3).Writable;
+var WritableStream = __webpack_require__(/*! readable-stream */ 2).Writable;
 var StringDecoder = __webpack_require__(/*! string_decoder */ "./node_modules/string_decoder/lib/string_decoder.js").StringDecoder;
 var Buffer = __webpack_require__(/*! buffer */ "./node_modules/buffer/index.js").Buffer;
 
@@ -53502,7 +53528,7 @@ var objectToString = Object.prototype.toString;
 var match = String.prototype.match;
 var bigIntValueOf = typeof BigInt === 'function' ? BigInt.prototype.valueOf : null;
 
-var inspectCustom = __webpack_require__(/*! ./util.inspect */ 2).custom;
+var inspectCustom = __webpack_require__(/*! ./util.inspect */ 1).custom;
 var inspectSymbol = inspectCustom && isSymbol(inspectCustom) ? inspectCustom : null;
 
 module.exports = function inspect_(obj, options, depth, seen) {
@@ -106161,7 +106187,7 @@ util.inherits = __webpack_require__(/*! inherits */ "./node_modules/inherits/inh
 /*</replacement>*/
 
 /*<replacement>*/
-var debugUtil = __webpack_require__(/*! util */ 4);
+var debugUtil = __webpack_require__(/*! util */ 3);
 var debug = void 0;
 if (debugUtil && debugUtil.debuglog) {
   debug = debugUtil.debuglog('stream');
@@ -108050,7 +108076,7 @@ Writable.prototype._destroy = function (err, cb) {
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Buffer = __webpack_require__(/*! safe-buffer */ "./node_modules/safe-buffer/index.js").Buffer;
-var util = __webpack_require__(/*! util */ 5);
+var util = __webpack_require__(/*! util */ 4);
 
 function copyBuffer(src, target, offset) {
   src.copy(target, offset);
@@ -110041,17 +110067,6 @@ module.exports = __webpack_require__(/*! ./client/index.js */"./client/index.js"
 /***/ }),
 
 /***/ 1:
-/*!********************!*\
-  !*** ws (ignored) ***!
-  \********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 2:
 /*!********************************!*\
   !*** ./util.inspect (ignored) ***!
   \********************************/
@@ -110062,10 +110077,21 @@ module.exports = __webpack_require__(/*! ./client/index.js */"./client/index.js"
 
 /***/ }),
 
-/***/ 3:
+/***/ 2:
 /*!*********************************!*\
   !*** readable-stream (ignored) ***!
   \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 3:
+/*!**********************!*\
+  !*** util (ignored) ***!
+  \**********************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -110085,9 +110111,9 @@ module.exports = __webpack_require__(/*! ./client/index.js */"./client/index.js"
 /***/ }),
 
 /***/ 5:
-/*!**********************!*\
-  !*** util (ignored) ***!
-  \**********************/
+/*!********************!*\
+  !*** ws (ignored) ***!
+  \********************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 

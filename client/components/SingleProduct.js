@@ -37,6 +37,8 @@ export class SingleProduct extends Component {
     event.preventDefault()
     // console.log('this.props.product', this.props.product)
     this.props.userAddCartThunk(this.props.product.id)
+    // we can use same thunk/reducer for both guest and user. the cart would just end up on an empty user
+    // so we wouldn't need a separate cart = [] reducer in the store
   }
   render() {
     console.log('hello this is the props', this.props)

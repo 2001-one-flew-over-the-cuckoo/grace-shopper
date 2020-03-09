@@ -66,7 +66,6 @@ export const logout = () => async dispatch => {
 export const userAddCartThunk = productId => async dispatch => {
   try {
     const {data} = await axios.post(`/api/orders/${productId}`, productId)
-
     dispatch(userAddToCart(data))
   } catch (error) {
     console.error(error)

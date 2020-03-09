@@ -70,7 +70,7 @@ const createApp = () => {
   })
 
   app.use((req, res, next) => {
-    if (!req.session.cart) req.session.cart = {products: []}
+    if (!req.session.cart) req.session.cart = {completed: false, products: []}
     next() // needed to continue through express middleware
   })
 

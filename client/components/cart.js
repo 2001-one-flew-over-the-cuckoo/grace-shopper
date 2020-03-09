@@ -14,7 +14,7 @@ const Cart = props => {
     event.preventDefault()
     history.push('/checkout')
   }
-  // console.log(props.user)
+  console.log('props in cart', props)
   if (props.user.orders === undefined || props.user.orders.length === 0) {
     return <div>You have no items in your cart.</div>
   } else {
@@ -22,9 +22,11 @@ const Cart = props => {
     if (props.user)
       cartObj = props.user.orders.find(order => order.completed === false)
     // how to access req.session on the front end? send into thunk
-    else if (req.session.cart.products > 0) {
-      cartObj = req.session.cart
-      console.log('req.session.cart', req.session.cart)
+    else {
+      console.log('no props.user')
+      // if (props.cart.products > 0) {
+      cartObj = props.cart
+      console.log('props.cart', props.cart)
     }
 
     if (cartObj.products.length > 0) {
@@ -66,7 +68,8 @@ const Cart = props => {
 
 const mapState = state => {
   return {
-    user: state.user
+    user: state.user,
+    cart: state.cart
   }
 }
 const mapDispatch = dispatch => {
