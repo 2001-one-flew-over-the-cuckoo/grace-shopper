@@ -65,8 +65,9 @@ export const logout = () => async dispatch => {
 
 export const userAddCartThunk = productId => async dispatch => {
   try {
-    const {data} = await axios.post(`/api/cart/${productId}`, productId)
-
+    const {data} = await axios.post(`/api/cart/`, {
+      productId: productId
+    })
     dispatch(userAddToCart(data))
   } catch (error) {
     console.error(error)
@@ -76,7 +77,6 @@ export const userAddCartThunk = productId => async dispatch => {
 export const removeProductFromCart = productId => async dispatch => {
   try {
     const {data} = await axios.delete(`/api/cart/${productId}`, productId)
-
     dispatch(userRemoveFromCart(data))
   } catch (error) {
     console.error(error)

@@ -2,10 +2,10 @@ const router = require('express').Router()
 const {Product, Order} = require('../db/models')
 module.exports = router
 
-router.post('/:productId', async (req, res, next) => {
+router.post('/', async (req, res, next) => {
   try {
     let cart
-    const productById = await Product.findByPk(req.params.productId)
+    const productById = await Product.findByPk(req.body.productId)
     // for logged in user
     if (req.user) {
       // find user cart
@@ -15,9 +15,7 @@ router.post('/:productId', async (req, res, next) => {
           completed: false
         }
       })
-
       await cart[0].addProduct(productById)
-
       const updatedOrders = await Order.findAll({
         where: {
           userId: req.user.id
