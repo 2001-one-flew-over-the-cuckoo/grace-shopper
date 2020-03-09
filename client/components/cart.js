@@ -15,9 +15,8 @@ const Cart = props => {
     event.preventDefault()
     history.push('/checkout')
   }
-  const ordersArr = props.user.orders
-  console.log('ordersArr', ordersArr)
-  if (ordersArr.length > 0 && ordersArr[0].products.length > 0) {
+  const cart = props.user.orders.find(order => order.completed === false)
+  if (cart.products.length > 0) {
     let cart = props.user.orders[0].products
     return (
       <div>

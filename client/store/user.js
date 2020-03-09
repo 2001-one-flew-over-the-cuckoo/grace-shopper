@@ -21,8 +21,9 @@ const getUser = user => ({type: GET_USER, user})
 const removeUser = () => ({type: REMOVE_USER})
 const userAddToCart = orders => ({type: USER_ADD_TO_CART, orders})
 const userRemoveFromCart = orders => ({type: USER_REMOVE_FROM_CART, orders})
-const userCheckout = () => ({
-  type: USER_CHECKOUT
+const userCheckout = orders => ({
+  type: USER_CHECKOUT,
+  orders
 })
 /**
  * THUNK CREATORS
@@ -84,9 +85,7 @@ export const removeProductFromCart = productId => async dispatch => {
 
 export const userCheckoutThunk = () => async dispatch => {
   try {
-    console.log('starting userCheckOutThunk')
     const {data} = await axios.put('/api/orders/checkout')
-    console.log('data from checkout thunk', data)
     dispatch(userCheckout(data))
   } catch (error) {
     console.error(error)
