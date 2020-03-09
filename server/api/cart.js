@@ -15,6 +15,7 @@ router.post('/:productId', async (req, res, next) => {
           completed: false
         }
       })
+
       await cart[0].addProduct(productById)
 
       const updatedOrders = await Order.findAll({
@@ -30,17 +31,6 @@ router.post('/:productId', async (req, res, next) => {
       })
       res.json(updatedOrders)
       // anonymous user with a cart
-    } else if (req.session.cart) {
-      // use session cart
-      cart = req.session.cart
-      cart.push(productById)
-      req.session.save()
-    } else {
-      // make new cart/cart
-      cart = Order.build({})
-      cart.push(productById)
-      req.session.cart = cart
-      req.session.save()
     }
   } catch (error) {
     next(error)
