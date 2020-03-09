@@ -77,15 +77,12 @@ router.delete('/:productId', async (req, res, next) => {
 
 router.put('/checkout', async (req, res, next) => {
   try {
-    // console.log('req.user', req.user)
     const cart = await Order.findOne({
       where: {
         userId: req.user.id,
         completed: false
       }
     })
-
-    console.log('cart', cart)
     await cart.update({completed: true})
     await Order.create({
       userId: req.user.id
@@ -95,17 +92,12 @@ router.put('/checkout', async (req, res, next) => {
       where: {
         userId: req.user.id
       },
-      include: [
-        {
-          model: Product,
-          required: false
-        }
-      ]
+      include: {
+        model: Product,
+        required: false
+      }
     })
-    console.log(updatedOrders)
     res.json(updatedOrders)
-    // const updatedRobot = await robotById.update(req.body)
-    // res.send(updatedRobot)
   } catch (error) {
     next(error)
   }
