@@ -6,7 +6,9 @@ import history from '../history'
  */
 const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER'
-
+const USER_ADD_TO_CART = 'USER_ADD_TO_CART'
+const USER_REMOVE_FROM_CART = 'USER_REMOVE_FROM_CART'
+const USER_CHECKOUT = 'USER_CHECKOUT'
 /**
  * INITIAL STATE
  */
@@ -17,7 +19,12 @@ const defaultUser = {}
  */
 const getUser = user => ({type: GET_USER, user})
 const removeUser = () => ({type: REMOVE_USER})
-
+const userAddToCart = orders => ({type: USER_ADD_TO_CART, orders})
+const userRemoveFromCart = orders => ({type: USER_REMOVE_FROM_CART, orders})
+const userCheckout = orders => ({
+  type: USER_CHECKOUT,
+  orders
+})
 /**
  * THUNK CREATORS
  */
@@ -56,6 +63,34 @@ export const logout = () => async dispatch => {
   }
 }
 
+export const userAddCartThunk = productId => async dispatch => {
+  try {
+    const {data} = await axios.post(`/api/orders/${productId}`, productId)
+
+    dispatch(userAddToCart(data))
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export const removeProductFromCart = productId => async dispatch => {
+  try {
+    const {data} = await axios.delete(`/api/orders/${productId}`, productId)
+
+    dispatch(userRemoveFromCart(data))
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export const userCheckoutThunk = () => async dispatch => {
+  try {
+    const {data} = await axios.put('/api/orders/checkout')
+    dispatch(userCheckout(data))
+  } catch (error) {
+    console.error(error)
+  }
+}
 /**
  * REDUCER
  */
@@ -65,6 +100,21 @@ export default function(state = defaultUser, action) {
       return action.user
     case REMOVE_USER:
       return defaultUser
+    case USER_ADD_TO_CART:
+      return {
+        ...state,
+        orders: action.orders
+      }
+    case USER_REMOVE_FROM_CART:
+      return {
+        ...state,
+        orders: action.orders
+      }
+    case USER_CHECKOUT:
+      return {
+        ...state,
+        orders: action.orders
+      }
     default:
       return state
   }

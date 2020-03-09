@@ -4,16 +4,22 @@ module.exports = router
 
 router.post('/:productId', async (req, res, next) => {
   try {
-    let order
-    const product = await Product.findByPk(req.params.productId)
-
+    let cart
+    const productById = await Product.findByPk(req.params.productId)
+    // for logged in user
     if (req.user) {
-      console.log('req.user', req.user)
       // find user cart
-      order = await Order.findOne({
+      cart = await Order.findOrCreate({
         where: {
           userId: req.user.id,
           completed: false
+        }
+      })
+      await cart[0].addProduct(productById)
+
+      const updatedOrders = await Order.findAll({
+        where: {
+          userId: req.user.id
         },
         include: [
           {
@@ -22,29 +28,77 @@ router.post('/:productId', async (req, res, next) => {
           }
         ]
       })
-      order.addProduct(product)
-      order.save()
-
-      order = order.products
+      res.json(updatedOrders)
+      // anonymous user with a cart
     } else if (req.session.cart) {
-      console.log('req.session.cart', req.session.cart)
       // use session cart
-      order = req.session.cart
-      order.push(product)
+      cart = req.session.cart
+      cart.push(productById)
       req.session.save()
     } else {
-      // make new order/cart
-      order = Order.build({})
-      order.push(product)
-      req.session.cart = order
+      // make new cart/cart
+      cart = Order.build({})
+      cart.push(productById)
+      req.session.cart = cart
       req.session.save()
     }
-
-    console.log('order', order)
-
-    res.json(order)
   } catch (error) {
-    console.log('error', error)
+    next(error)
+  }
+})
+
+router.delete('/:productId', async (req, res, next) => {
+  try {
+    const product = await Product.findByPk(req.params.productId)
+    const order = await Order.findOne({
+      where: {
+        userId: req.user.id,
+        completed: false
+      }
+    })
+    await order.removeProduct(product)
+
+    const updatedOrders = await Order.findAll({
+      where: {
+        userId: req.user.id
+      },
+      include: [
+        {
+          model: Product,
+          required: false
+        }
+      ]
+    })
+    res.json(updatedOrders)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.put('/checkout', async (req, res, next) => {
+  try {
+    const cart = await Order.findOne({
+      where: {
+        userId: req.user.id,
+        completed: false
+      }
+    })
+    await cart.update({completed: true})
+    await Order.create({
+      userId: req.user.id
+    })
+
+    const updatedOrders = await Order.findAll({
+      where: {
+        userId: req.user.id
+      },
+      include: {
+        model: Product,
+        required: false
+      }
+    })
+    res.json(updatedOrders)
+  } catch (error) {
     next(error)
   }
 })

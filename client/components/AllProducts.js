@@ -30,7 +30,6 @@ class AllProducts extends Component {
       description: '',
       image: ''
     }
-    console.log('user', user)
     const isAdmin = user.isAdmin
     if (this.state.showAddForm) {
       return (
