@@ -6,28 +6,29 @@ import {logout} from '../store'
 import {Cart} from './cart'
 
 const Navbar = ({handleClick, isLoggedIn}) => (
-  <div>
-    <h1>Care Kit</h1>
+  <div className="navbar">
+    <h1>
+      <Link to="/">Care Kit</Link>
+    </h1>
     <nav>
       <Link to="/products">Products</Link>
       {isLoggedIn ? (
-        <div>
+        <span>
           {/* The navbar will show these links after you log in */}
-          <Link to="/home">Home</Link>
+          <Link to="/home">Account</Link>
           <Link to="#" onClick={handleClick}>
             Logout
           </Link>
           <Link to="/cart">View Cart</Link>
-        </div>
+        </span>
       ) : (
-        <div>
+        <span>
           {/* The navbar will show these links before you log in */}
           <Link to="/login">Login</Link>
           <Link to="/signup">Sign Up</Link>
-        </div>
+        </span>
       )}
     </nav>
-    <hr />
   </div>
 )
 

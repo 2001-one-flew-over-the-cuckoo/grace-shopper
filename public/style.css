@@ -2,6 +2,27 @@ body {
   font-family: sans-serif;
 }
 
+/* NAVBAR */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.navbar h1 {
+  width: 50%;
+  margin-left: 1.5em;
+}
+
+nav {
+  min-width: 30%;
+  margin-top: 1.9em;
+  margin-right: 2em;
+}
+
+nav a {
+  margin-left: 2em;
+}
+
 a {
   text-decoration: none;
 }
@@ -10,19 +31,10 @@ label {
   display: block;
 }
 
-nav a {
-  display: inline-block;
-  margin: 1em;
-}
-
 form div {
   margin: 1em;
   display: inline-block;
 }
-
-/* .all-prod-container {
-  display: flex;
-} */
 
 .all-products {
   justify-content: center;
