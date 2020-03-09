@@ -42,9 +42,11 @@ router.post('/login', async (req, res, next) => {
 router.post('/signup', async (req, res, next) => {
   try {
     const userInfo = {}
-    if (email) userInfo.email = req.body.email
-    if (password) userInfo.password = req.body.password
+    if (req.body.email) userInfo.email = req.body.email
+    if (req.body.password) userInfo.password = req.body.password
     const user = await User.create(userInfo)
+    // i'm forcing the user object that we're passing to res.json to have an orders array here but its not saving it in the database. we want to give a newly signed up user an orders array so that the cart info wont break on render
+    user.orders = []
     req.login(user, err => (err ? next(err) : res.json(user)))
   } catch (err) {
     if (err.name === 'SequelizeUniqueConstraintError') {
