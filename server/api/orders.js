@@ -6,9 +6,8 @@ router.post('/:productId', async (req, res, next) => {
   try {
     let cart
     const productById = await Product.findByPk(req.params.productId)
-    // for logged in user
     if (req.user) {
-      // find user cart
+      // if logged in
       cart = await Order.findOrCreate({
         where: {
           userId: req.user.id,
@@ -16,7 +15,42 @@ router.post('/:productId', async (req, res, next) => {
         }
       })
       await cart[0].addProduct(productById)
+      const updatedOrders = await Order.findAll({
+        where: {
+          userId: req.user.id
+        },
+        include: [
+          {
+            model: Product,
+            required: false
+          }
+        ]
+      })
+      req.session.products = []
+      req.session.save()
+      res.json(updatedOrders)
+    } else {
+      // not logged in
+      req.session.cart.products.push(productById)
+      req.session.save()
+      res.json(res.session.cart)
+    }
+  } catch (error) {
+    next(error)
+  }
+})
 
+router.delete('/:productId', async (req, res, next) => {
+  try {
+    const productById = await Product.findByPk(req.params.productId)
+    if (req.user) {
+      const order = await Order.findOne({
+        where: {
+          userId: req.user.id,
+          completed: false
+        }
+      })
+      await order.removeProduct(productById)
       const updatedOrders = await Order.findAll({
         where: {
           userId: req.user.id
@@ -29,47 +63,14 @@ router.post('/:productId', async (req, res, next) => {
         ]
       })
       res.json(updatedOrders)
-      // anonymous user with a cart
-    } else if (req.session.cart) {
-      // use session cart
-      cart = req.session.cart
-      cart.push(productById)
-      req.session.save()
     } else {
-      // make new cart/cart
-      cart = Order.build({})
-      cart.push(productById)
-      req.session.cart = cart
+      // need to test once front end up
+      // req.session.cart.products = req.session.cart.products.filter(product => {
+      //   product.id !== req.params.productId
+      // })
       req.session.save()
+      res.json(req.session.cart)
     }
-  } catch (error) {
-    next(error)
-  }
-})
-
-router.delete('/:productId', async (req, res, next) => {
-  try {
-    const product = await Product.findByPk(req.params.productId)
-    const order = await Order.findOne({
-      where: {
-        userId: req.user.id,
-        completed: false
-      }
-    })
-    await order.removeProduct(product)
-
-    const updatedOrders = await Order.findAll({
-      where: {
-        userId: req.user.id
-      },
-      include: [
-        {
-          model: Product,
-          required: false
-        }
-      ]
-    })
-    res.json(updatedOrders)
   } catch (error) {
     next(error)
   }

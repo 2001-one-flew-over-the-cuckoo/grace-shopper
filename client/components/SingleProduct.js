@@ -36,7 +36,6 @@ export class SingleProduct extends Component {
   addToCartClick(event) {
     event.preventDefault()
     // console.log('this.props.product', this.props.product)
-    console.log('prod id', this.props.product.id)
     this.props.userAddCartThunk(this.props.product.id)
   }
   render() {

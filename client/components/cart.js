@@ -14,17 +14,25 @@ const Cart = props => {
     event.preventDefault()
     history.push('/checkout')
   }
-  console.log(props.user)
-  if (props.user.orders === undefined) {
+  // console.log(props.user)
+  if (props.user.orders === undefined || props.user.orders.length === 0) {
     return <div>You have no items in your cart.</div>
   } else {
-    const cart = props.user.orders.find(order => order.completed === false)
-    if (cart.products.length > 0) {
-      let cart = props.user.orders[0].products
+    let cartObj
+    if (props.user)
+      cartObj = props.user.orders.find(order => order.completed === false)
+    // how to access req.session on the front end? send into thunk
+    else if (req.session.cart.products > 0) {
+      cartObj = req.session.cart
+      console.log('req.session.cart', req.session.cart)
+    }
+
+    if (cartObj.products.length > 0) {
+      let cartArr = cartObj.products
       return (
         <div>
           {props.user.email}
-          {cart.map(prodInCart => {
+          {cartArr.map(prodInCart => {
             return (
               <div key={prodInCart.id} id="prodInCart">
                 <img src={prodInCart.image} />
@@ -41,7 +49,7 @@ const Cart = props => {
             <div>Subtotal</div>
             <div>
               {(
-                cart.reduce((acc, currVal) => {
+                cartArr.reduce((acc, currVal) => {
                   return acc + currVal.price
                 }, 0) / 100
               ).toFixed(2)}

@@ -68,20 +68,22 @@ router.post('/logout', (req, res) => {
 })
 
 router.get('/me', async (req, res) => {
-  const user = await User.findOne({
-    where: {
-      id: req.user.id
-    },
-    include: [
-      {
-        model: Order,
-        include: {
-          model: Product
+  if (req.user) {
+    const user = await User.findOne({
+      where: {
+        id: req.user.id
+      },
+      include: [
+        {
+          model: Order,
+          include: {
+            model: Product
+          }
         }
-      }
-    ]
-  })
-  res.json(user)
+      ]
+    })
+    res.json(user)
+  }
 })
 
 router.use('/google', require('./google'))
