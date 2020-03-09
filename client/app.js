@@ -11,13 +11,6 @@ const App = () => {
     <div>
       <Navbar />
       <Routes />
-      <Route exact path="/products" component={AllProducts} />
-      <Route exact path="/products/:productId" component={SingleProduct} />
-      <Route
-        exact
-        path="/products/:productId/edit"
-        component={ManageProducts}
-      />
     </div>
   )
 }

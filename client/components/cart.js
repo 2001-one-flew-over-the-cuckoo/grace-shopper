@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import {me} from '../store/user'
 
 const Cart = props => {
+  console.log(props)
   const ordersArr = props.user.orders
   if (ordersArr.length > 0 && ordersArr[0].products.length > 0) {
     let cart = props.user.orders[0].products
