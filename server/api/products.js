@@ -1,13 +1,14 @@
 /* eslint-disable complexity */
 const router = require('express').Router()
 const {Product, User} = require('../db/models')
+const {adminsOnly} = require('./helperFuncs')
 module.exports = router
 
 router.get('/', async (req, res, next) => {
   try {
     const products = await Product.findAll()
-    res.json(products)
     if (!products) res.sendStatus(404)
+    res.json(products)
   } catch (error) {
     next(error)
   }
@@ -15,100 +16,66 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:productId', async (req, res, next) => {
   try {
-    console.log(req.session)
     const productById = await Product.findByPk(req.params.productId)
-    res.json(productById)
     if (!productById) res.sendStatus(404)
+    res.json(productById)
   } catch (error) {
     next(error)
   }
 })
 
 // eslint-disable-next-line complexity
-router.put('/:productId', async (req, res, next) => {
+router.put('/:productId', adminsOnly, async (req, res, next) => {
   try {
-    if (req.session.passport) {
-      const user = await User.findByPk(req.session.passport.user)
-      const isAnAdmin = user.isAdmin
-      if (isAnAdmin) {
-        let productById = await Product.findByPk(req.params.productId)
-        if (!productById) {
-          res.sendStatus(404)
-        } else {
-          const formData = {}
-          formData.id = req.body.id
-          if (req.body.name) formData.name = req.body.name
-          if (req.body.price) formData.price = req.body.price
-          if (req.body.description) formData.description = req.body.description
-          if (req.body.image) formData.image = req.body.image
-          const updatedProduct = await productById.update(formData)
-          res.send(updatedProduct)
-        }
-      }
+    let productById = await Product.findByPk(req.params.productId)
+    if (!productById) {
+      res.sendStatus(404)
     } else {
-      res.sendStatus(403)
+      const formData = {}
+      formData.id = req.body.id
+      if (req.body.name) formData.name = req.body.name
+      if (req.body.price) formData.price = req.body.price
+      if (req.body.description) formData.description = req.body.description
+      if (req.body.image) formData.image = req.body.image
+      const updatedProduct = await productById.update(formData)
+      res.send(updatedProduct)
     }
   } catch (error) {
     next(error)
   }
 })
 
-router.delete('/:productId', async (req, res, next) => {
+router.delete('/:productId', adminsOnly, async (req, res, next) => {
   try {
-    if (req.session.passport) {
-      const user = await User.findByPk(req.session.passport.user)
-      const isAnAdmin = user.isAdmin
-      if (isAnAdmin) {
-        let productById = await Product.findByPk(req.params.productId)
-        if (!productById) {
-          res.sendStatus(404)
-        } else {
-          productById = await Product.findByPk(req.params.productId)
-          if (!productById) res.sendStatus(404)
-          else {
-            await Product.destroy({
-              where: {
-                id: req.params.productId
-              }
-            })
-            res.sendStatus(204)
-          }
-        }
-      }
+    let productById = await Product.findByPk(req.params.productId)
+    if (!productById) {
+      res.sendStatus(404)
     } else {
-      res.sendStatus(403)
+      await Product.destroy({
+        where: {
+          id: req.params.productId
+        }
+      })
+      res.sendStatus(204)
     }
   } catch (error) {
     next(error)
   }
 })
 
-router.post('/', async (req, res, next) => {
+router.post('/', adminsOnly, async (req, res, next) => {
   try {
-    if (req.session.passport) {
-      const user = await User.findByPk(req.session.passport.user)
-      const isAnAdmin = user.isAdmin
-      if (isAnAdmin) {
-        let productById = await Product.findByPk(req.params.productId)
-        if (!productById) {
-          res.sendStatus(404)
-        } else {
-          const formData = {}
-          if (req.body.name) {
-            formData.name = req.body.name
-          } else {
-            res.status(206).send('Name is required')
-          }
-          if (req.body.price) formData.price = req.body.price
-          if (req.body.description) formData.description = req.body.description
-          if (req.body.image) formData.image = req.body.image
-          const newProduct = await Product.create(formData)
-          res.status(201).send(newProduct)
-        }
-      }
+    const formData = {}
+    if (req.body.name) {
+      formData.name = req.body.name
     } else {
-      res.sendStatus(403)
+      res.status(206).send('Name is required')
     }
+    if (req.body.price) formData.price = req.body.price
+    if (req.body.description) formData.description = req.body.description
+    if (req.body.image) formData.image = req.body.image
+    const newProduct = await Product.create(formData)
+    res.status(201).send(newProduct)
   } catch (error) {
     next(error)
   }
