@@ -25,9 +25,9 @@ const Cart = props => {
   if (props.user.orders === undefined || props.user.orders.length === 0) {
     return <div>You have no items in your cart.</div>
   } else {
-    const cart = props.user.orders.find(order => order.completed === false)
-    if (cart.products.length > 0) {
-      let cart = props.user.orders[0].products
+    let getCart = props.user.orders.find(order => order.completed === false)
+    if (getCart.products.length > 0) {
+      cart = getCart.products
       return (
         <div>
           {props.user.email}
