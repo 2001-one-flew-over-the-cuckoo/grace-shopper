@@ -3,8 +3,10 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {me, removeProductFromCart, userUpdateQtyThunk} from '../store/user'
 import Select from 'react-select'
+import {useHistory} from 'react-router-dom'
 
 const Cart = props => {
+  const history = useHistory()
   const handleChange = event => {
     props.userUpdateQtyThunk(event.prodId, event.value)
   }
@@ -16,6 +18,7 @@ const Cart = props => {
 
   const checkoutHandler = event => {
     event.preventDefault()
+
     history.push('/checkout')
   }
 
@@ -62,7 +65,7 @@ const Cart = props => {
             <div>
               {(
                 cart.reduce((acc, currVal) => {
-                  return acc + currVal.price
+                  return acc + currVal.price * currVal.product_order.quantity
                 }, 0) / 100
               ).toFixed(2)}
             </div>
