@@ -24,7 +24,6 @@ async function seed() {
       isAdmin: true
     }),
     User.create({email: 'leslie@email.com', password: '123'})
-    //admin with empty cart and non-admin with populated cart
   ])
   console.log('Product', Product)
   const products = await Promise.all([
@@ -47,7 +46,7 @@ async function seed() {
       name: 'Breakup Box',
       price: 3000,
       description:
-        'Breakups are the worst. Be a good friend and get her a Breakup Box filled with everything she needs to feel better. ',
+        'Breakups are the worst. Be a good friend and get her a Breakup Box filled with everything she needs to feel better.',
       image:
         'https://images.unsplash.com/photo-1519869491916-8ca6f615d6bd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60'
     }),
@@ -63,14 +62,14 @@ async function seed() {
       name: 'Money Moves Box',
       price: 3000,
       description:
-        "Celebrate your friend's new career milestone with a box of everything she needs to make it from 9 to 5.",
-      image: ''
+        "Celebrate your friend's new career milestone with a box of everything she needs to make it from 9 to 5."
     }),
     Product.create({
       name: 'Engagement Box',
       price: 3000,
-      description: '.',
-      image: ''
+      description: "Celebrate your friend's impending nuptials.",
+      image:
+        'https://images.unsplash.com/reserve/xd45Y326SvKzSR3Nanc8_MRJ_8125-1.jpg?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
     }),
     Product.create({
       name: "Galentine's Day Box",
@@ -78,7 +77,7 @@ async function seed() {
       description:
         "Show your gal pals how much you love them with our Galentine's Day Box.",
       image:
-        'https://images.unsplash.com/photo-1513075675228-cffb4b1b91f7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60'
+        'https://images.unsplash.com/photo-1487537177666-94b1f521631a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60'
     }),
     Product.create({
       name: "Treat Yo' Self Box",
@@ -93,21 +92,31 @@ async function seed() {
       price: 3000,
       description:
         "You will thank your past self for having ordered this box of pain killers, sports drinks, and snacks for when you can't make it off the couch.",
-      image: ''
+      image:
+        'https://images.unsplash.com/photo-1579640873954-766bf0235bf3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60'
     }),
     Product.create({
       name: 'Couch Potato Box',
       price: 3000,
       description:
         'Get yourself this box filled with popcorn and movie snacks for your next binge-watching session.',
-      image: ''
+      image:
+        'https://images.unsplash.com/photo-1513075675228-cffb4b1b91f7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60'
     }),
     Product.create({
       name: 'Bon Voyage Box',
       price: 3000,
       description:
         'Goodbyes are tough. Send your friend off on their next adventure with our Bon Voyage Box.',
-      image: ''
+      image:
+        'https://images.unsplash.com/photo-1468531792933-a91616453c36?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60'
+    }),
+    Product.create({
+      name: 'Sweetheart Box',
+      price: 3000,
+      image:
+        'https://images.unsplash.com/photo-1485376026565-375e3f216bbd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
+      description: 'Get this box for the love interest in your life.'
     }),
     Product.create({
       name: 'Socks',
@@ -128,7 +137,7 @@ async function seed() {
       price: 2000,
       image:
         'https://images.unsplash.com/photo-1578704694513-08946e996642?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
-      description: 'Test out your green thumb '
+      description: 'Test out your green thumb with a new plant baby.'
     }),
     Product.create({
       name: 'Truffles',
@@ -153,16 +162,17 @@ async function seed() {
       description: 'The perfect gift for the wine lover in your life.'
     }),
     Product.create({
-      name: 'Sweetheart Box',
-      price: 3000,
+      name: 'Flowers',
+      price: 2000,
       image:
-        'https://images.unsplash.com/photo-1485376026565-375e3f216bbd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
-      description: 'Get this box for the love interest in your life.'
+        'https://images.unsplash.com/photo-1498480086004-2400bd8c3663?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
+      desciption: 'A perfect gift for any occassion!'
     })
   ])
   const order = await Order.create()
   await order.addProducts(products)
   await users[0].addOrder(order)
+  await users[3].addOrder(order)
 
   console.log(`seeded ${users.length} users`)
   console.log(`seeded ${products.length} users`)
