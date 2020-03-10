@@ -59,16 +59,12 @@ router.delete('/:productId', adminsOnly, async (req, res, next) => {
     if (!productById) {
       res.sendStatus(404)
     } else {
-      productById = await Product.findByPk(req.params.productId)
-      if (!productById) res.sendStatus(404)
-      else {
-        await Product.destroy({
-          where: {
-            id: req.params.productId
-          }
-        })
-        res.sendStatus(204)
-      }
+      await Product.destroy({
+        where: {
+          id: req.params.productId
+        }
+      })
+      res.sendStatus(204)
     }
   } catch (error) {
     next(error)
@@ -77,22 +73,17 @@ router.delete('/:productId', adminsOnly, async (req, res, next) => {
 
 router.post('/', adminsOnly, async (req, res, next) => {
   try {
-    let productById = await Product.findByPk(req.params.productId)
-    if (!productById) {
-      res.sendStatus(404)
+    const formData = {}
+    if (req.body.name) {
+      formData.name = req.body.name
     } else {
-      const formData = {}
-      if (req.body.name) {
-        formData.name = req.body.name
-      } else {
-        res.status(206).send('Name is required')
-      }
-      if (req.body.price) formData.price = req.body.price
-      if (req.body.description) formData.description = req.body.description
-      if (req.body.image) formData.image = req.body.image
-      const newProduct = await Product.create(formData)
-      res.status(201).send(newProduct)
+      res.status(206).send('Name is required')
     }
+    if (req.body.price) formData.price = req.body.price
+    if (req.body.description) formData.description = req.body.description
+    if (req.body.image) formData.image = req.body.image
+    const newProduct = await Product.create(formData)
+    res.status(201).send(newProduct)
   } catch (error) {
     next(error)
   }
