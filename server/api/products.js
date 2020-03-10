@@ -1,16 +1,8 @@
 /* eslint-disable complexity */
 const router = require('express').Router()
 const {Product, User} = require('../db/models')
+const {adminsOnly} = require('./helperFuncs')
 module.exports = router
-
-const adminsOnly = (req, res, next) => {
-  if (!req.user || !req.user.isAdmin) {
-    const error = new Error('You do not have permission to view this page')
-    error.status = 403
-    return next(error)
-  }
-  next()
-}
 
 router.get('/', async (req, res, next) => {
   try {
