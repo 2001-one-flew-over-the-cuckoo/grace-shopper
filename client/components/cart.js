@@ -14,8 +14,7 @@ const Cart = props => {
     event.preventDefault()
     history.push('/checkout')
   }
-  console.log(props.user)
-  if (props.user.orders === undefined) {
+  if (props.user.orders === undefined || props.user.orders.length === 0) {
     return <div>You have no items in your cart.</div>
   } else {
     const cart = props.user.orders.find(order => order.completed === false)

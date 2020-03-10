@@ -18,7 +18,7 @@ const checkout = () => {
 
 export const addToCartThunk = productId => async dispatch => {
   try {
-    const {data} = await axios.post(`/api/orders/${productId}`)
+    const {data} = await axios.post(`/api/cart/${productId}`)
     dispatch(addedToCart(data))
   } catch (error) {
     console.error(error)
