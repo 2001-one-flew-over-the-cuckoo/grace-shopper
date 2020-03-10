@@ -9,6 +9,7 @@ const REMOVE_USER = 'REMOVE_USER'
 const USER_ADD_TO_CART = 'USER_ADD_TO_CART'
 const USER_REMOVE_FROM_CART = 'USER_REMOVE_FROM_CART'
 const USER_CHECKOUT = 'USER_CHECKOUT'
+const USER_UPDATE_QUANTITY = 'USER_UPDATE_QUANTITY'
 /**
  * INITIAL STATE
  */
@@ -23,6 +24,10 @@ const userAddToCart = orders => ({type: USER_ADD_TO_CART, orders})
 const userRemoveFromCart = orders => ({type: USER_REMOVE_FROM_CART, orders})
 const userCheckout = orders => ({
   type: USER_CHECKOUT,
+  orders
+})
+const userUpdateQuantity = orders => ({
+  type: USER_UPDATE_QUANTITY,
   orders
 })
 /**
@@ -63,12 +68,11 @@ export const logout = () => async dispatch => {
   }
 }
 
-export const userAddCartThunk = (productId, quantity) => async dispatch => {
+export const userAddCartThunk = productId => async dispatch => {
   try {
-    console.log('quantity', quantity)
+    // console.log('quantity', quantity)
     const {data} = await axios.post(`/api/cart/`, {
-      productId: productId,
-      quantity: quantity.value
+      productId: productId
     })
     dispatch(userAddToCart(data))
   } catch (error) {
@@ -89,6 +93,16 @@ export const userCheckoutThunk = () => async dispatch => {
   try {
     const {data} = await axios.put('/api/cart/checkout')
     dispatch(userCheckout(data))
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export const userUpdateQtyThunk = async (productId, quantity) => {
+  try {
+    const {data} = await axios.put('/api/cart', {
+      productId: productId
+    })
   } catch (error) {
     console.error(error)
   }

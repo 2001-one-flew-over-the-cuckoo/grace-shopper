@@ -2,27 +2,17 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchOneProduct, updateProductThunk} from '../store/singleProduct'
 import {userAddCartThunk} from '../store'
-import Select from 'react-select'
-import ManageProducts from './admin-components/manage-products'
 
-const options = [
-  {value: 1, label: 1},
-  {value: 2, label: 2},
-  {value: 3, label: 3},
-  {value: 4, label: 4},
-  {value: 5, label: 5}
-]
+import ManageProducts from './admin-components/manage-products'
 
 export class SingleProduct extends Component {
   constructor() {
     super()
     this.state = {
-      showEditForm: false,
-      selectedQty: 1
+      showEditForm: false
     }
     this.handleClickToEdit = this.handleClickToEdit.bind(this)
     this.addToCartClick = this.addToCartClick.bind(this)
-    this.handleChange = this.handleChange.bind(this)
   }
   componentDidMount() {
     const productId = this.props.match.params.productId
@@ -33,9 +23,7 @@ export class SingleProduct extends Component {
       showEditForm: !this.state.showEditForm
     })
   }
-  handleChange(selectedQty) {
-    this.setState({selectedQty})
-  }
+
   addToCartClick(event) {
     event.preventDefault()
     this.props.userAddCartThunk(this.props.product.id, this.state.selectedQty)
@@ -56,15 +44,7 @@ export class SingleProduct extends Component {
             <h2>{product.name}</h2>
             <h3>${(product.price / 100).toFixed(2)}</h3>
             <h3>{product.description}</h3>
-            <h3>
-              Quantity:{' '}
-              <Select
-                options={options}
-                defaultValue={{label: '1', value: 1}}
-                isSearchable={false}
-                onChange={this.handleChange}
-              />
-            </h3>
+
             <button type="button" onClick={this.addToCartClick}>
               Add to Cart
             </button>
@@ -95,8 +75,7 @@ const mapDispatch = dispatch => {
   return {
     fetchOneProduct: productId => dispatch(fetchOneProduct(productId)),
     updateProductThunk: product => dispatch(updateProductThunk(product)),
-    userAddCartThunk: (productId, quantity) =>
-      dispatch(userAddCartThunk(productId, quantity))
+    userAddCartThunk: productId => dispatch(userAddCartThunk(productId))
   }
 }
 
