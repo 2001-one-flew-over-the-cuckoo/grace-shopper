@@ -6,7 +6,6 @@ router.post('/', async (req, res, next) => {
   try {
     let cart
     const productById = await Product.findByPk(req.body.productId)
-    // for logged in user
     if (req.user) {
       // find user cart
       cart = await Order.findOrCreate({
@@ -28,7 +27,6 @@ router.post('/', async (req, res, next) => {
         ]
       })
       res.json(updatedOrders)
-      // anonymous user with a cart
     }
   } catch (error) {
     next(error)
