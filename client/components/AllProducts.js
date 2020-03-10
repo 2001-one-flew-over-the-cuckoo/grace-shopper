@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {fetchProducts} from '../store/products'
 import {Link} from 'react-router-dom'
 import ManageProducts from './admin-components/manage-products'
+import {withRouter} from 'react-router-dom'
 
 class AllProducts extends Component {
   constructor() {
@@ -40,10 +41,8 @@ class AllProducts extends Component {
     return (
       <div>
         <div>
-          {isAdmin === true ? (
-            <button type="button" onClick={this.handleClick}>
-              Add New Product
-            </button>
+          {isAdmin === true && this.props.location.pathname === '/products' ? (
+            <div onClick={this.handleClick}>Add New Product</div>
           ) : (
             <h1 />
           )}
@@ -80,4 +79,4 @@ const mapDispatch = dispatch => {
   }
 }
 
-export default connect(mapState, mapDispatch)(AllProducts)
+export default withRouter(connect(mapState, mapDispatch)(AllProducts))

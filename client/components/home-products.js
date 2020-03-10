@@ -4,7 +4,9 @@ import AllProducts from './AllProducts'
 const HomeProducts = () => {
   return (
     <section className="home-products">
-      <h2>All Products</h2>
+      <div className="header">
+        <h2>All Products</h2>
+      </div>
       <AllProducts />
     </section>
   )

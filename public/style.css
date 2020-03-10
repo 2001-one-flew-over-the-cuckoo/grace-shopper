@@ -133,6 +133,7 @@ a {
   position: relative;
   width: 100vw;
   height: 100vh;
+  margin-bottom: 2em;
 }
 
 .hero::before {
@@ -149,13 +150,10 @@ a {
 }
 
 .hero-content {
-  /* border: 2px solid red; */
-  /* background-color: #232323;
-  opacity: 0.3; */
-  padding: 2em;
+  opacity: 0.3;
+  */padding: 2em;
   width: 40%;
   position: relative;
-  /* border: 3px solid red; */
   left: 50%;
   top: 25%;
   z-index: 0;
@@ -186,7 +184,16 @@ a {
 
 /* HOME PRODUCTS SECTION */
 .home-products {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
   border: 2px solid red;
+}
+
+.home-products .header {
+  display: flex;
+  justify-content: center;
+  font-size: 2.5em;
 }
 
 label {
