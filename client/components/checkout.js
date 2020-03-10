@@ -2,21 +2,20 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {userCheckoutThunk} from '../store/user'
-
+import Notifications, {notify} from 'react-notify-toast'
 const Checkout = props => {
   const handleConfirmCheckout = event => {
     event.preventDefault()
     props.userCheckoutThunk()
-    // history.push to thank you page
+    notify.show('Thanks for your order!', 'success')
   }
   return (
     <div>
+      <Notifications />
       <button onClick={handleConfirmCheckout}>Confirm Checkout</button>
     </div>
   )
 }
-
-const mapState = state => ({})
 
 const mapDispatch = dispatch => ({
   userCheckoutThunk: () => dispatch(userCheckoutThunk())
