@@ -63,10 +63,12 @@ export const logout = () => async dispatch => {
   }
 }
 
-export const userAddCartThunk = productId => async dispatch => {
+export const userAddCartThunk = (productId, quantity) => async dispatch => {
   try {
+    console.log('quantity', quantity)
     const {data} = await axios.post(`/api/cart/`, {
-      productId: productId
+      productId: productId,
+      quantity: quantity.value
     })
     dispatch(userAddToCart(data))
   } catch (error) {

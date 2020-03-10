@@ -3,25 +3,26 @@ import {connect} from 'react-redux'
 import {fetchOneProduct, updateProductThunk} from '../store/singleProduct'
 import {userAddCartThunk} from '../store'
 import Select from 'react-select'
-import {Link} from 'react-router-dom'
 import ManageProducts from './admin-components/manage-products'
 
-// const options = [
-//   {value: 1, label: 1},
-//   {value: 2, label: 2},
-//   {value: 3, label: 3},
-//   {value: 4, label: 4},
-//   {value: 5, label: 5}
-// ]
+const options = [
+  {value: 1, label: 1},
+  {value: 2, label: 2},
+  {value: 3, label: 3},
+  {value: 4, label: 4},
+  {value: 5, label: 5}
+]
 
 export class SingleProduct extends Component {
   constructor() {
     super()
     this.state = {
-      showEditForm: false
+      showEditForm: false,
+      selectedQty: 1
     }
     this.handleClickToEdit = this.handleClickToEdit.bind(this)
     this.addToCartClick = this.addToCartClick.bind(this)
+    this.handleChange = this.handleChange.bind(this)
   }
   componentDidMount() {
     const productId = this.props.match.params.productId
@@ -32,15 +33,15 @@ export class SingleProduct extends Component {
       showEditForm: !this.state.showEditForm
     })
   }
-
+  handleChange(selectedQty) {
+    this.setState({selectedQty})
+  }
   addToCartClick(event) {
     event.preventDefault()
-    // console.log('this.props.product', this.props.product)
-    console.log('prod id', this.props.product.id)
-    this.props.userAddCartThunk(this.props.product.id)
+    this.props.userAddCartThunk(this.props.product.id, this.state.selectedQty)
   }
   render() {
-    console.log('hello this is the props', this.props)
+    console.log('hi this is the props', this.props)
     const {product, user} = this.props
     const isAdmin = user.isAdmin
     if (this.state.showEditForm) {
@@ -55,9 +56,15 @@ export class SingleProduct extends Component {
             <h2>{product.name}</h2>
             <h3>${(product.price / 100).toFixed(2)}</h3>
             <h3>{product.description}</h3>
-            {/* <h3>
-              Quantity: <Select options={options} />
-            </h3> */}
+            <h3>
+              Quantity:{' '}
+              <Select
+                options={options}
+                defaultValue={{label: '1', value: 1}}
+                isSearchable={false}
+                onChange={this.handleChange}
+              />
+            </h3>
             <button type="button" onClick={this.addToCartClick}>
               Add to Cart
             </button>
@@ -88,7 +95,8 @@ const mapDispatch = dispatch => {
   return {
     fetchOneProduct: productId => dispatch(fetchOneProduct(productId)),
     updateProductThunk: product => dispatch(updateProductThunk(product)),
-    userAddCartThunk: productId => dispatch(userAddCartThunk(productId))
+    userAddCartThunk: (productId, quantity) =>
+      dispatch(userAddCartThunk(productId, quantity))
   }
 }
 

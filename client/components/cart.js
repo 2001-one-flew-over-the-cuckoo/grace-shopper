@@ -5,6 +5,7 @@ import {me, removeProductFromCart} from '../store/user'
 import {useHistory} from 'react-router-dom'
 
 const Cart = props => {
+  console.log('props', props)
   let history = useHistory()
   const handleDeleteClick = event => {
     event.preventDefault()
@@ -28,8 +29,8 @@ const Cart = props => {
               <div key={prodInCart.id} id="prodInCart">
                 <img src={prodInCart.image} />
                 <div>{prodInCart.name}</div>
-                <div>Quantity (drop-down to be added)</div>
-                <div>{(prodInCart.price / 100).toFixed(2)}</div>
+                <div>Quantity {prodInCart.product_order.quantity}</div>
+                <div>Price ${(prodInCart.price / 100).toFixed(2)}</div>
                 <button onClick={handleDeleteClick} id={prodInCart.id}>
                   [x]
                 </button>
