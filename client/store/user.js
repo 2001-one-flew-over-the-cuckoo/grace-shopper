@@ -101,8 +101,10 @@ export const userCheckoutThunk = () => async dispatch => {
 export const userUpdateQtyThunk = async (productId, quantity) => {
   try {
     const {data} = await axios.put('/api/cart', {
-      productId: productId
+      productId: productId,
+      quantity: quantity
     })
+    dispatch(userUpdateQuantity(data))
   } catch (error) {
     console.error(error)
   }
@@ -127,6 +129,11 @@ export default function(state = defaultUser, action) {
         orders: action.orders
       }
     case USER_CHECKOUT:
+      return {
+        ...state,
+        orders: action.orders
+      }
+    case USER_UPDATE_QUANTITY:
       return {
         ...state,
         orders: action.orders

@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {me, removeProductFromCart} from '../store/user'
+import {me, removeProductFromCart, userUpdateQtyThunk} from '../store/user'
 import Select from 'react-select'
 
 export class Cart extends Component {
@@ -17,7 +17,7 @@ export class Cart extends Component {
     console.log('event', event)
     // console.log('event.target', event.target)
     this.setState({selectedQty: event.value})
-    this.props.updateQuantity(event.prodId, event.value)
+    this.props.userUpdateQtyThunk(event.prodId, event.value)
   }
   handleDeleteClick(event) {
     event.preventDefault()
@@ -97,8 +97,8 @@ const mapDispatch = dispatch => {
     fetchMe: () => dispatch(me()),
     removeProductFromCart: productId =>
       dispatch(removeProductFromCart(productId)),
-    updateQuantity: (productId, quantity) =>
-      dispatch(updateQuantity(productId, quantity))
+    userUpdateQtyThunk: (productId, quantity) =>
+      dispatch(userUpdateQtyThunk(productId, quantity))
   }
 }
 
