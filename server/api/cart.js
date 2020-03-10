@@ -4,7 +4,7 @@ module.exports = router
 
 router.put('/', async (req, res, next) => {
   try {
-    cart = await Order.findOne({
+    const cart = await Order.findOne({
       where: {userId: req.user.id, completed: false}
     })
     await cart.getProducts().then(async products => {

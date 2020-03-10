@@ -1,9 +1,10 @@
 const router = require('express').Router()
 const {User, Product, Order, Product_Order} = require('../db/models')
+const {adminsOnly, matchingUserOrAdmin} = require('./helperFuncs')
 
 module.exports = router
 
-router.get('/', async (req, res, next) => {
+router.get('/', adminsOnly, async (req, res, next) => {
   try {
     const users = await User.findAll({
       // explicitly select only the id and email fields - even though
@@ -17,7 +18,7 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.get('/:userId', async (req, res, next) => {
+router.get('/:userId', adminsOnly, async (req, res, next) => {
   try {
     const userInfo = await User.findOne({
       where: {
@@ -36,7 +37,7 @@ router.get('/:userId', async (req, res, next) => {
   }
 })
 
-router.put('/:userId', async (req, res, next) => {
+router.put('/:userId', matchingUserOrAdmin, async (req, res, next) => {
   try {
     const oldU = await User.findByPk(userId)
     const newU = await oldU.update(req.body)
