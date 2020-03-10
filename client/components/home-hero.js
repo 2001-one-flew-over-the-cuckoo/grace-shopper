@@ -1,12 +1,7 @@
 import React from 'react'
 
-const Hero = () => {
+const HomeHero = () => {
   return (
-    // <div className="hero-container">
-    //   <div className="hero-img"></div>
-    //   <div className="hero-text">HERO TEXT</div>
-    // </div>
-
     <section className="hero">
       <div className="hero-content">
         <div className="hero-copy">
@@ -26,4 +21,4 @@ const Hero = () => {
   )
 }
 
-export default Hero
+export default HomeHero

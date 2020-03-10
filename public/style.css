@@ -184,6 +184,11 @@ a {
   color: white;
 }
 
+/* HOME PRODUCTS SECTION */
+.home-products {
+  border: 2px solid red;
+}
+
 label {
   display: block;
 }
