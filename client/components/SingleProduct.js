@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchOneProduct, updateProductThunk} from '../store/singleProduct'
 import {userAddCartThunk} from '../store'
-
+import Notifications, {notify} from 'react-notify-toast'
 import ManageProducts from './admin-components/manage-products'
 
 export class SingleProduct extends Component {
@@ -27,6 +27,7 @@ export class SingleProduct extends Component {
   addToCartClick(event) {
     event.preventDefault()
     this.props.userAddCartThunk(this.props.product.id, this.state.selectedQty)
+    notify.show('Added to cart!', 'success')
   }
   render() {
     const {product, user} = this.props
@@ -38,6 +39,7 @@ export class SingleProduct extends Component {
     } else
       return (
         <div className="product">
+          <Notifications />
           <img src={product.image} />
           <div>
             <h2>{product.name}</h2>

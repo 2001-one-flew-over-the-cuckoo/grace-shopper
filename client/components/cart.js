@@ -18,7 +18,6 @@ const Cart = props => {
 
   const checkoutHandler = event => {
     event.preventDefault()
-
     history.push('/checkout')
   }
 
@@ -27,7 +26,7 @@ const Cart = props => {
   } else {
     let getCart = props.user.orders.find(order => order.completed === false)
     if (getCart.products.length > 0) {
-      cart = getCart.products
+      let cart = getCart.products
       return (
         <div>
           {props.user.email}
