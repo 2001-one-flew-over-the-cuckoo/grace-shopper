@@ -29,7 +29,6 @@ export class SingleProduct extends Component {
     this.props.userAddCartThunk(this.props.product.id, this.state.selectedQty)
   }
   render() {
-    console.log('hi this is the props', this.props)
     const {product, user} = this.props
     const isAdmin = user.isAdmin
     if (this.state.showEditForm) {

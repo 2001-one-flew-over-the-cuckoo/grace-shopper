@@ -14,8 +14,6 @@ export class Cart extends Component {
     this.handleDeleteClick = this.handleDeleteClick.bind(this)
   }
   handleChange(event) {
-    console.log('event', event)
-    // console.log('event.target', event.target)
     this.setState({selectedQty: event.value})
     this.props.userUpdateQtyThunk(event.prodId, event.value)
   }
