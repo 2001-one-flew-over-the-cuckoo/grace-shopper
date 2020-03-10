@@ -15,8 +15,8 @@ const adminsOnly = (req, res, next) => {
 router.get('/', async (req, res, next) => {
   try {
     const products = await Product.findAll()
-    res.json(products)
     if (!products) res.sendStatus(404)
+    res.json(products)
   } catch (error) {
     next(error)
   }
@@ -24,10 +24,9 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:productId', async (req, res, next) => {
   try {
-    console.log(req.session)
     const productById = await Product.findByPk(req.params.productId)
-    res.json(productById)
     if (!productById) res.sendStatus(404)
+    res.json(productById)
   } catch (error) {
     next(error)
   }
