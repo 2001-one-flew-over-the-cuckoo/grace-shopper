@@ -1,30 +1,187 @@
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  color: #232323;
+}
+
 body {
   font-family: sans-serif;
+  font-size: 16px;
 }
 
 /* NAVBAR */
 .navbar {
   display: flex;
   justify-content: space-between;
+  padding: 1.5em 3em;
+  /* background-color: #DCE0D9; */
+  background-color: #a790a5;
 }
 
 .navbar h1 {
+  /* border: 2px solid blue; */
+  font-size: 2em;
   width: 50%;
-  margin-left: 1.5em;
+  text-decoration: none;
+}
+
+.navbar h1 a {
+  text-decoration: none;
 }
 
 nav {
-  min-width: 30%;
-  margin-top: 1.9em;
-  margin-right: 2em;
+  /* border: 2px solid purple; */
+  padding-top: 0.6em;
 }
 
 nav a {
+  /* border: 2px solid green; */
   margin-left: 2em;
 }
 
 a {
   text-decoration: none;
+}
+
+/* HERO */
+
+.hero {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url(https://images.unsplash.com/photo-1512418490979-92798cec1380?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1600);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+
+.hero-content {
+  /* border: 2px solid red; */
+  /* background-color: #232323;
+  opacity: 0.3; */
+  padding: 2em;
+  width: 40%;
+  position: relative;
+  /* border: 3px solid red; */
+  left: 50%;
+  top: 25%;
+  z-index: 0;
+}
+
+.hero-copy {
+  padding: 2em;
+  background-color: #e8e8e8;
+}
+
+.hero h1 {
+  font-size: 3em;
+  margin-bottom: 0.5em;
+}
+
+.hero h2 {
+  font-size: 1.5em;
+  margin-bottom: 1em;
+}
+
+.hero button {
+  border-radius: 40px;
+  font-size: 1.5em;
+  background-color: #f42272;
+  padding: 0.6em 1.5em;
+  color: white;
 }
 
 label {
