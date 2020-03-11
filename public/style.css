@@ -103,12 +103,10 @@ body {
   display: flex;
   justify-content: space-between;
   padding: 1.5em 3em;
-  /* background-color: #DCE0D9; */
   background-color: #a790a5;
 }
 
 .navbar h1 {
-  /* border: 2px solid blue; */
   font-size: 2em;
   width: 50%;
   text-decoration: none;
@@ -119,12 +117,10 @@ body {
 }
 
 nav {
-  /* border: 2px solid purple; */
   padding-top: 0.6em;
 }
 
 nav a {
-  /* border: 2px solid green; */
   margin-left: 2em;
 }
 
@@ -302,7 +298,6 @@ a {
 
 .footer-col {
   color: #dce0d9;
-  /* border: 2px solid red; */
 }
 
 .footer-col,
