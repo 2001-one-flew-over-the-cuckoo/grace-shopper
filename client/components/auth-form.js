@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {auth} from '../store'
 import {render} from 'enzyme'
+import {Link} from 'react-router-dom'
 
 class AuthForm extends React.Component {
   constructor() {
@@ -21,6 +22,7 @@ class AuthForm extends React.Component {
   }
 
   render() {
+    console.log(this.props)
     const {name, displayName, handleSubmit, error} = this.props
     return (
       <div>
@@ -47,7 +49,8 @@ class AuthForm extends React.Component {
           </div>
           {error && error.response && <div> {error.response.data} </div>}
         </form>
-        <a href="/auth/google">{displayName} with Google</a>
+
+        {/* <a href="/auth/google">{displayName} with Google</a> */}
       </div>
     )
   }
