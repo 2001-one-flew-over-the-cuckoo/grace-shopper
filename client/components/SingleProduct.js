@@ -2,17 +2,8 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchOneProduct, updateProductThunk} from '../store/singleProduct'
 import {userAddCartThunk} from '../store'
-import Select from 'react-select'
-import {Link} from 'react-router-dom'
+import Notifications, {notify} from 'react-notify-toast'
 import ManageProducts from './admin-components/manage-products'
-
-// const options = [
-//   {value: 1, label: 1},
-//   {value: 2, label: 2},
-//   {value: 3, label: 3},
-//   {value: 4, label: 4},
-//   {value: 5, label: 5}
-// ]
 
 export class SingleProduct extends Component {
   constructor() {
@@ -35,7 +26,8 @@ export class SingleProduct extends Component {
 
   addToCartClick(event) {
     event.preventDefault()
-    this.props.userAddCartThunk(this.props.product.id)
+    this.props.userAddCartThunk(this.props.product.id, this.state.selectedQty)
+    notify.show('Added to cart!', 'success')
   }
   render() {
     const {product, user} = this.props
@@ -47,15 +39,13 @@ export class SingleProduct extends Component {
     } else
       return (
         <div className="product-container">
+          <Notifications />
           <div className="product">
             <img src={product.image} />
             <div className="product-details">
               <h2>{product.name}</h2>
               <h3>${(product.price / 100).toFixed(2)}</h3>
               <h3>{product.description}</h3>
-              {/* <h3>
-              Quantity: <Select options={options} />
-            </h3> */}
               <button
                 id="add-to-cart-btn"
                 type="button"
