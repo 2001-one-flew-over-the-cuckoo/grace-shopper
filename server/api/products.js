@@ -1,6 +1,6 @@
 /* eslint-disable complexity */
 const router = require('express').Router()
-const {Product, User} = require('../db/models')
+const {Product} = require('../db/models')
 const {adminsOnly} = require('./helperFuncs')
 module.exports = router
 

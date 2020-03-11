@@ -2,16 +2,13 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import ProductForm from './manage-products-form.js'
-import {fetchOneProduct, updateProductThunk} from '../../store/singleProduct'
+import {updateProductThunk} from '../../store/singleProduct'
 import {removeProductThunk, addProductThunk} from '../../store/products'
 
 class ManageProducts extends Component {
   constructor(props) {
     super(props)
     const priceInDollars = (props.product.price / 100).toFixed(2)
-    //conditional - state is either nothing, or come from props.product
-    //if it comes from /products - name = ''...
-    //else, autopopulate it
     let defaultState
     if (this.props.history.location.pathname === '/products') {
       defaultState = {
@@ -35,15 +32,9 @@ class ManageProducts extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleClick = this.handleClick.bind(this)
   }
-
-  componentDidMount() {
-    console.log(this.props.history)
-  }
-
   handleSubmit(event) {
     event.preventDefault()
     const priceInCents = this.state.price * 100
-    console.log('I am submitting')
 
     if (this.props.history.location.pathname === '/products') {
       const newProduct = {
@@ -55,7 +46,6 @@ class ManageProducts extends Component {
       this.props.addProductThunk(newProduct)
     } else {
       const productId = this.props.product.id
-      console.log('productId', productId)
       const updatedProduct = {
         id: productId,
         name: this.state.name,
@@ -66,8 +56,6 @@ class ManageProducts extends Component {
       this.props.updateProductThunk(updatedProduct)
     }
 
-    //Add a function to re-render list after update
-    // this.props.getProduct(this.props.product.id)
     this.props.closeForm()
   }
 
@@ -114,7 +102,6 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => {
   return {
-    // getProduct: productId => dispatch(fetchOneProduct(productId)),
     updateProductThunk: product => dispatch(updateProductThunk(product)),
     removeProductThunk: product => dispatch(removeProductThunk(product)),
     addProductThunk: product => dispatch(addProductThunk(product))
