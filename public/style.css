@@ -488,3 +488,26 @@ button.checkout {
   color: white;
   font-size: 1em;
 }
+
+.empty-cart {
+  height: 100vh;
+  margin-top: 3em;
+  margin-left: 3em;
+}
+
+/* CHECKOUT PAGE */
+.checkout-container {
+  height: 100vh;
+}
+
+.checkout button {
+  margin-top: 3em;
+  margin-left: 3em;
+  border: 1px solid #f42272;
+  background-color: #f42272;
+  border-radius: 40px;
+  padding: 0.7em 2em;
+  color: white;
+  font-size: 1em;
+  margin-bottom: 1000px;
+}

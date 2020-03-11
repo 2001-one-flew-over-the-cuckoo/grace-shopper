@@ -81,7 +81,7 @@ const Cart = props => {
         </div>
       )
     } else {
-      return <div>You have no items in your cart.</div>
+      return <div className="empty-cart">You have no items in your cart.</div>
     }
   }
 }
