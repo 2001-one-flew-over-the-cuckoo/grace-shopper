@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {User, Product, Order, Product_Order} = require('../db/models')
+const {User, Product, Order} = require('../db/models')
 const {adminsOnly, matchingUserOrAdmin} = require('./helperFuncs')
 
 module.exports = router
@@ -37,12 +37,12 @@ router.get('/:userId', adminsOnly, async (req, res, next) => {
   }
 })
 
-router.put('/:userId', matchingUserOrAdmin, async (req, res, next) => {
-  try {
-    const oldU = await User.findByPk(userId)
-    const newU = await oldU.update(req.body)
-    res.json(newU)
-  } catch (error) {
-    next(error)
-  }
-})
+// router.put('/:userId', matchingUserOrAdmin, async (req, res, next) => {
+//   try {
+//     const oldUser = await User.findByPk(req.params.userId)
+//     const newUser = await oldUser.update(req.body)
+//     res.json(newUser)
+//   } catch (error) {
+//     next(error)
+//   }
+// })

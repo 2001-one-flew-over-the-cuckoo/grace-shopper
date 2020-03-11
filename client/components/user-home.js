@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {AdminHome} from './admin-home'
-import Cart from './cart.js'
+// import Cart from './cart.js'
 
 /**
  * COMPONENT

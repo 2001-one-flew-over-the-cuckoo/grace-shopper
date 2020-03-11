@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const ADD_TO_CART = 'ADD_TO_CART'
-const CHECKOUT = 'CHECKOUT'
+// const CHECKOUT = 'CHECKOUT'
 
 const addedToCart = (product, userId) => {
   return {

@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {me, removeProductFromCart, userUpdateQtyThunk} from '../store/user'
@@ -54,7 +54,11 @@ const Cart = props => {
                   />
                 </span>
                 <div>Price ${(prodInCart.price / 100).toFixed(2)}</div>
-                <button onClick={handleDeleteClick} id={prodInCart.id}>
+                <button
+                  type="button"
+                  onClick={handleDeleteClick}
+                  id={prodInCart.id}
+                >
                   [x]
                 </button>
               </div>
@@ -71,7 +75,7 @@ const Cart = props => {
               ).toFixed(2)}
             </div>
           </div>
-          <button className="checkout" onClick={checkoutHandler}>
+          <button type="button" className="checkout" onClick={checkoutHandler}>
             Checkout
           </button>
         </div>

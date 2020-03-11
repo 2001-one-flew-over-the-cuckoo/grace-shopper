@@ -22,7 +22,6 @@ describe('Product model', () => {
 
       it('checks validations of the model and throws an error if requirements are not met', () => {
         fakeFake.name = 'Happy Birthday Box'
-
         expect(Product.update(fakeFake, {where: {id: 1}})[1]).to.throw()
         expect(Product.update(fakeFake, {where: {id: 1}})[1]).to.be.an('error')
       })

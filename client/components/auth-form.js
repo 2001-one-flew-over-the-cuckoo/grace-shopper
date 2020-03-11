@@ -2,8 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {auth} from '../store'
-import {render} from 'enzyme'
-import {Link} from 'react-router-dom'
+// import {render} from 'enzyme'
 
 class AuthForm extends React.Component {
   constructor() {

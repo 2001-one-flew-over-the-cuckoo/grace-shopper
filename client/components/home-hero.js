@@ -6,7 +6,7 @@ const HomeHero = () => {
     <section className="hero">
       <div className="hero-content">
         <div className="hero-copy">
-          <h1 className="hero-title">HERO TITLE</h1>
+          <h1 className="hero-title">Care Kit</h1>
           <h2 className="hero-subtitle">
             Ennui flannel street art affogato +1 vegan cliche single-origin
             coffee food truck freegan. Green juice pinterest succulents,
