@@ -77,6 +77,7 @@ class ManageProducts extends Component {
           <div />
         ) : (
           <button
+            className="remove-prod-btn"
             type="button"
             onClick={() => this.handleClick(this.props.product)}
           >

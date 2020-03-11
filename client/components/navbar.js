@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
-// import {Cart} from './cart'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faShoppingCart} from '@fortawesome/free-solid-svg-icons'
 
 const Navbar = ({handleClick, isLoggedIn}) => (
   <div className="navbar">
@@ -19,7 +20,6 @@ const Navbar = ({handleClick, isLoggedIn}) => (
           <Link to="#" onClick={handleClick}>
             Logout
           </Link>
-          <Link to="/cart">View Cart</Link>
         </span>
       ) : (
         <span>
@@ -28,6 +28,9 @@ const Navbar = ({handleClick, isLoggedIn}) => (
           <Link to="/signup">Sign Up</Link>
         </span>
       )}
+      <Link to="/cart">
+        <FontAwesomeIcon icon={faShoppingCart} />
+      </Link>
     </nav>
   </div>
 )

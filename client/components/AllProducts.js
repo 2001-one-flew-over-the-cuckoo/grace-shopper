@@ -3,6 +3,9 @@ import {connect} from 'react-redux'
 import {fetchProducts} from '../store/products'
 import {Link} from 'react-router-dom'
 import ManageProducts from './admin-components/manage-products'
+import {withRouter} from 'react-router-dom'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faPlus} from '@fortawesome/free-solid-svg-icons'
 
 class AllProducts extends Component {
   constructor() {
@@ -38,12 +41,13 @@ class AllProducts extends Component {
     }
 
     return (
-      <div>
+      <div className="products">
         <div>
-          {isAdmin === true ? (
-            <button type="button" onClick={this.handleClick}>
+          {isAdmin === true && this.props.location.pathname === '/products' ? (
+            <div className="add-product-link" onClick={this.handleClick}>
+              {' '}
               Add New Product
-            </button>
+            </div>
           ) : (
             <h1 />
           )}
@@ -80,4 +84,4 @@ const mapDispatch = dispatch => {
   }
 }
 
-export default connect(mapState, mapDispatch)(AllProducts)
+export default withRouter(connect(mapState, mapDispatch)(AllProducts))

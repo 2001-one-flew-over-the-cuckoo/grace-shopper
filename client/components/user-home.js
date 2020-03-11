@@ -11,9 +11,9 @@ export const UserHome = props => {
   const {email, isAdmin} = props
 
   return (
-    <div>
+    <div className="user-home">
       <h3>Welcome, {email}</h3>
-      <div>{isAdmin === true ? <AdminHome /> : <div />}</div>
+      <div>{isAdmin === true ? <AdminHome /> : null}</div>
     </div>
   )
 }
