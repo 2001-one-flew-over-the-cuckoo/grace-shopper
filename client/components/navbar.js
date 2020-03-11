@@ -4,6 +4,8 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
 import {Cart} from './cart'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faShoppingCart} from '@fortawesome/free-solid-svg-icons'
 
 const Navbar = ({handleClick, isLoggedIn}) => (
   <div className="navbar">
@@ -19,7 +21,9 @@ const Navbar = ({handleClick, isLoggedIn}) => (
           <Link to="#" onClick={handleClick}>
             Logout
           </Link>
-          <Link to="/cart">View Cart</Link>
+          <Link to="/cart">
+            <FontAwesomeIcon icon={faShoppingCart} />
+          </Link>
         </span>
       ) : (
         <span>
