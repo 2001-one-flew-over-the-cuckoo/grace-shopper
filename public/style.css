@@ -355,3 +355,20 @@ form div {
   margin: 1em;
   display: inline-block;
 }
+
+/* USER HOME */
+.user-home {
+  padding-top: 3em;
+  margin-left: 3em;
+  height: 100vh;
+}
+
+.user-home h3 {
+  margin-bottom: 2em;
+}
+
+/* ADMIN HOME */
+
+.admin-home {
+  height: 100vh;
+}
