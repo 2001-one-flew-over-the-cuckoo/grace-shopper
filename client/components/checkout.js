@@ -10,7 +10,7 @@ const Checkout = props => {
     notify.show('Thanks for your order!', 'success')
   }
   return (
-    <div>
+    <div className="checkout">
       <Notifications />
       <button type="button" onClick={handleConfirmCheckout}>
         Confirm Checkout
