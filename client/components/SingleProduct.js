@@ -55,10 +55,7 @@ export class SingleProduct extends Component {
               </button>
               <div>
                 {isAdmin === true ? (
-                  <button
-                    className="manage-prod-link"
-                    onClick={this.handleClickToEdit}
-                  >
+                  <button id="white-btn" onClick={this.handleClickToEdit}>
                     Manage Product
                   </button>
                 ) : (

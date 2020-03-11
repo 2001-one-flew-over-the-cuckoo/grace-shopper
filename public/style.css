@@ -284,6 +284,13 @@ a {
   border: 1px solid #232323;
 }
 
+#white-btn {
+  border-radius: 40px;
+  font-size: 1em;
+  padding: 0.8em 1.5em;
+  color: #232323;
+}
+
 /* FOOTER */
 .footer {
   padding: 3em 0;
