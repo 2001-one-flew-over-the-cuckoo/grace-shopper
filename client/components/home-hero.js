@@ -1,4 +1,5 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 
 const HomeHero = () => {
   return (
@@ -12,9 +13,11 @@ const HomeHero = () => {
             waistcoat ramps aesthetic tilde shabby chic kogi next level
             activated charcoal prism.{' '}
           </h2>
-          <button type="button" className="hero-button">
-            Click Here
-          </button>
+          <Link to="/products">
+            <button type="button" className="hero-button">
+              View products
+            </button>
+          </Link>
         </div>
       </div>
     </section>

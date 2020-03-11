@@ -93,7 +93,7 @@ async function seed() {
       description:
         "You will thank your past self for having ordered this box of pain killers, sports drinks, and snacks for when you can't make it off the couch.",
       image:
-        'https://images.unsplash.com/photo-1579640873954-766bf0235bf3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60'
+        'https://images.unsplash.com/photo-1514995669114-6081e934b693?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60'
     }),
     Product.create({
       name: 'Couch Potato Box',

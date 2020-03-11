@@ -42,6 +42,10 @@
   "author": "Fullstack Academy of Code",
   "license": "MIT",
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.12.1",
+    "@fortawesome/fontawesome-svg-core": "^1.2.27",
+    "@fortawesome/free-solid-svg-icons": "^5.12.1",
+    "@fortawesome/react-fontawesome": "^0.1.9",
     "axios": "^0.19.2",
     "compression": "^1.7.4",
     "connect-session-sequelize": "^6.1.1",
