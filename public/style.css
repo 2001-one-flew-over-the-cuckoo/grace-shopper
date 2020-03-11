@@ -280,8 +280,9 @@ a {
   position: absolute;
   top: 7em;
   right: 2em;
-  padding: 20px;
+  padding: 0.8em 1.5em;
   border: 1px solid #232323;
+  border-radius: 40px;
 }
 
 #white-btn {
