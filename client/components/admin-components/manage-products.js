@@ -36,9 +36,7 @@ class ManageProducts extends Component {
     this.handleClick = this.handleClick.bind(this)
   }
 
-  componentDidMount() {
-    console.log(this.props.history)
-  }
+  componentDidMount() {}
 
   handleSubmit(event) {
     event.preventDefault()

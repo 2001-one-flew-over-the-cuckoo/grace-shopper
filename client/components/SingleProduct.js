@@ -38,7 +38,6 @@ export class SingleProduct extends Component {
     this.props.userAddCartThunk(this.props.product.id)
   }
   render() {
-    console.log('hello this is the props', this.props)
     const {product, user} = this.props
     const isAdmin = user.isAdmin
     if (this.state.showEditForm) {
@@ -47,27 +46,37 @@ export class SingleProduct extends Component {
       )
     } else
       return (
-        <div className="product">
-          <img src={product.image} />
-          <div>
-            <h2>{product.name}</h2>
-            <h3>${(product.price / 100).toFixed(2)}</h3>
-            <h3>{product.description}</h3>
-            {/* <h3>
+        <div className="product-container">
+          <div className="product">
+            <img src={product.image} />
+            <div className="product-details">
+              <h2>{product.name}</h2>
+              <h3>${(product.price / 100).toFixed(2)}</h3>
+              <h3>{product.description}</h3>
+              {/* <h3>
               Quantity: <Select options={options} />
             </h3> */}
-            <button type="button" onClick={this.addToCartClick}>
-              Add to Cart
-            </button>
-          </div>
-          <div>
-            {isAdmin === true ? (
-              <button type="button" onClick={this.handleClickToEdit}>
-                Manage Product
+              <button
+                id="add-to-cart-btn"
+                type="button"
+                onClick={this.addToCartClick}
+              >
+                Add to Cart
               </button>
-            ) : (
-              <h1 />
-            )}
+              <div>
+                {isAdmin === true ? (
+                  <button
+                    className="manage-prod-link"
+                    onClick={this.handleClickToEdit}
+                  >
+                    Manage Product
+                  </button>
+                ) : (
+                  <h1 />
+                )}
+              </div>
+            </div>
+            <div />
           </div>
         </div>
       )
