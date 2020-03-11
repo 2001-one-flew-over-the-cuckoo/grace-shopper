@@ -372,13 +372,11 @@ a {
 
 .auth-form h3 {
   font-size: 1.4em;
-  /* border: 2px solid red; */
   margin-bottom: 1.5em;
 }
 
 /* FORM */
 .auth-form .form-item {
-  /* border: 2px solid blue; */
   margin-bottom: 1em;
   font-size: 1em;
 }
@@ -389,7 +387,6 @@ a {
 }
 
 .auth-form input {
-  /* border: 3px solid green; */
   padding: 0.5em;
   font-size: 1em;
   margin-bottom: 1em;
@@ -402,4 +399,59 @@ a {
   padding: 0.7em 2em;
   color: white;
   font-size: 1em;
+}
+
+/* PRODUCT FORM */
+.prod-form-container {
+  height: 100vh;
+  padding-top: 3em;
+  margin-left: 3em;
+}
+
+.prod-form-container h3 {
+  font-size: 1.4em;
+  margin-bottom: 1.5em;
+}
+
+.auth-form .prod-form-btn,
+.prod-form-item label {
+  display: block;
+}
+
+.prod-form-item {
+  margin-bottom: 1em;
+}
+
+.prod-form-item label {
+  display: block;
+  margin-bottom: 0.5em;
+}
+
+.prod-form-item input {
+  padding: 0.5em;
+  font-size: 1em;
+  margin-bottom: 1em;
+}
+
+.prod-form-btn button {
+  border: 1px solid #f42272;
+  background-color: #f42272;
+  border-radius: 40px;
+  padding: 0.7em 2em;
+  color: white;
+  font-size: 1em;
+}
+
+.remove-prod-btn {
+  border: 1px solid #232323;
+  border-radius: 40px;
+  padding: 0.7em 2em;
+  font-size: 1em;
+
+  position: absolute;
+  top: 7em;
+  right: 2em;
+  padding: 0.8em 1.5em;
+  border: 1px solid #232323;
+  border-radius: 40px;
 }
