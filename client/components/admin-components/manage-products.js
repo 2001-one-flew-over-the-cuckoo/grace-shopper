@@ -36,14 +36,11 @@ class ManageProducts extends Component {
     this.handleClick = this.handleClick.bind(this)
   }
 
-  componentDidMount() {
-    console.log(this.props.history)
-  }
+  componentDidMount() {}
 
   handleSubmit(event) {
     event.preventDefault()
     const priceInCents = this.state.price * 100
-    console.log('I am submitting')
 
     if (this.props.history.location.pathname === '/products') {
       const newProduct = {
@@ -55,7 +52,7 @@ class ManageProducts extends Component {
       this.props.addProductThunk(newProduct)
     } else {
       const productId = this.props.product.id
-      console.log('productId', productId)
+
       const updatedProduct = {
         id: productId,
         name: this.state.name,
@@ -89,6 +86,7 @@ class ManageProducts extends Component {
           <div />
         ) : (
           <button
+            className="remove-prod-btn"
             type="button"
             onClick={() => this.handleClick(this.props.product)}
           >

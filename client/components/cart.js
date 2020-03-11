@@ -28,15 +28,16 @@ const Cart = props => {
     if (getCart.products.length > 0) {
       let cart = getCart.products
       return (
-        <div>
-          {props.user.email}
+        <div className="cart-container">
+          <h3>Your Cart</h3>
+          {/* {props.user.email} */}
           {cart.map(prodInCart => {
             return (
               <div key={prodInCart.id} id="prodInCart">
                 <img src={prodInCart.image} />
                 <div>{prodInCart.name}</div>
                 <div>Quantity {prodInCart.product_order.quantity}</div>
-                <h3>
+                <span>
                   Quantity:{' '}
                   <Select
                     key={prodInCart.id}
@@ -51,7 +52,7 @@ const Cart = props => {
                     isSearchable={false}
                     onChange={handleChange}
                   />
-                </h3>
+                </span>
                 <div>Price ${(prodInCart.price / 100).toFixed(2)}</div>
                 <button onClick={handleDeleteClick} id={prodInCart.id}>
                   [x]
@@ -60,8 +61,9 @@ const Cart = props => {
             )
           })}
           <div id="subtotal">
-            <div>Subtotal</div>
-            <div>
+            <h3>Subtotal</h3>
+            <div className="subtotal-num">
+              $
               {(
                 cart.reduce((acc, currVal) => {
                   return acc + currVal.price * currVal.product_order.quantity
@@ -69,7 +71,9 @@ const Cart = props => {
               ).toFixed(2)}
             </div>
           </div>
-          <button onClick={checkoutHandler}>Checkout</button>
+          <button className="checkout" onClick={checkoutHandler}>
+            Checkout
+          </button>
         </div>
       )
     } else {

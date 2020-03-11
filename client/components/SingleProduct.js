@@ -38,26 +38,32 @@ export class SingleProduct extends Component {
       )
     } else
       return (
-        <div className="product">
+        <div className="product-container">
           <Notifications />
-          <img src={product.image} />
-          <div>
-            <h2>{product.name}</h2>
-            <h3>${(product.price / 100).toFixed(2)}</h3>
-            <h3>{product.description}</h3>
-
-            <button type="button" onClick={this.addToCartClick}>
-              Add to Cart
-            </button>
-          </div>
-          <div>
-            {isAdmin === true ? (
-              <button type="button" onClick={this.handleClickToEdit}>
-                Manage Product
+          <div className="product">
+            <img src={product.image} />
+            <div className="product-details">
+              <h2>{product.name}</h2>
+              <h3>${(product.price / 100).toFixed(2)}</h3>
+              <h3>{product.description}</h3>
+              <button
+                id="add-to-cart-btn"
+                type="button"
+                onClick={this.addToCartClick}
+              >
+                Add to Cart
               </button>
-            ) : (
-              <h1 />
-            )}
+              <div>
+                {isAdmin === true ? (
+                  <button id="white-btn" onClick={this.handleClickToEdit}>
+                    Manage Product
+                  </button>
+                ) : (
+                  <h1 />
+                )}
+              </div>
+            </div>
+            <div />
           </div>
         </div>
       )
