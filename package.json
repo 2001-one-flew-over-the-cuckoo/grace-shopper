@@ -107,7 +107,7 @@
     "simple-git": "^1.132.0",
     "supertest": "^4.0.2",
     "webpack": "^4.42.1",
-    "webpack-cli": "^3.3.11",
+    "webpack-cli": "^3.3.12",
     "yaml": "^1.8.3"
   }
 }
